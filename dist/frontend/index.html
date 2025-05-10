@@ -1,0 +1,63 @@
+<!-- created by create-app-cli -->
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<base href="." />
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+		<title>Audiophone Player</title>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	<body>
+		<div id="root"></div>
+		<header>
+			<div class="header-title">
+				<img src="img/music-note.svg" alt="music-note" class="icons" />
+				<h2 class="subtitle">Music</h2>
+			</div>
+			<div class="form-search-top">
+				<input 
+					id="search"
+					maxlength="255"  
+					type="text" 
+					name="s" 
+					placeholder="Buscar Canciones"	
+				/>
+			</div>
+			<div class="form-avatar">
+				<img src="img/user.svg" alt="user.svg" class="icons" />
+			</div>
+		</header>
+		<main>
+			<aside id="menu">
+				<p>
+					<img src="img/home.svg" alt="home" />
+					<span>Principal</span>
+				</p>
+				<p>
+					<img src="img/music-album.svg" alt="music-album" style="background-color: white;" />
+					<span>Biblioteca</span>
+				</p>	
+			</aside>
+			<div class="main-cont">
+				<img src="img/music-note.svg" alt="play" class="main-img" />
+			</div>
+			<div id="playlist">
+				<div>
+					<div class="text-center">
+						<button class="load-button-playlist" id="load-playlist">
+							Cargar archivos
+						</button>
+					</div>
+					<div id="data">
+						<p class="text-center">No se cargaron archivos</p>
+					</div>
+				</div>
+			</div>
+			<script src="index.js"></script>
+		</main>
+	</body>
+</html>
+	

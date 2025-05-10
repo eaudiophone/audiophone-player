@@ -1,0 +1,144 @@
+:root {
+    --background: #000;
+    --foreground: #fff;
+    --borders: #3c3c3c;
+    --background-form: rgba(136, 136, 136, .5);
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    margin: 0 18px;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    border-bottom: 1px solid var(--borders);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.form-search-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-search-top input {
+    color: var(--foreground);
+    background-color: rgba(136, 136, 136, .5);
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid var(--borders);
+    padding: 10px 20px;
+    width: 70%;
+    font-size: 0.9rem;
+}
+
+.form-avatar, .header-title {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.header-title {
+    justify-content: start;
+}
+
+.header-title img {
+    margin-right: 15px;
+}
+
+.icons {
+    width: 2rem;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    height: calc(100vh - 68px);
+}
+
+aside {
+    border-right: 1px solid var(--borders);
+}
+
+aside img {
+    width: 1rem;
+    margin-right: 12px;
+}
+
+aside p {
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    margin: 10px;
+}
+
+aside p:first-child {
+    background-color: rgba(136, 136, 136, .4);
+    border-radius: 5px;
+    margin: 10px;
+}
+
+#playlist {
+    height: inherit;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#playlist > div {
+    margin-top: 15px;
+}
+
+#playlist button {
+    padding: 12px 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 9999px;
+    outline: none;
+}
+
+#playlist button:hover {
+    background-color: lightgray;
+}
+
+#playlist .item {
+    border-bottom: 1px solid var(--borders);
+    padding: 10px 7px;
+    cursor: pointer;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+#playlist .item:first-child {
+    margin-top: 20px;
+}
+
+#playlist .item img {
+    height: 24px;
+    margin-right: 10px;
+}
+
+#playlist .item:hover {
+    background-color: var(--borders);
+}
+
+.main-img {
+    max-width: 65%;
+}
+
+.main-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
