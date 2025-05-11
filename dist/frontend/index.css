@@ -1,3 +1,24 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url(fonts/Roboto-Regular.ttf);
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(fonts/Roboto-Bold.ttf);
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(fonts/Roboto-Italic.ttf);
+    font-weight: normal;
+    font-style: italic;
+}
+
 :root {
     --background: #000;
     --foreground: #fff;
@@ -8,7 +29,8 @@
 body {
     background-color: var(--background);
     color: var(--foreground);
-    margin: 0 18px;
+    margin: 0;
+    font-family: 'Roboto';
 }
 
 header {
@@ -17,13 +39,21 @@ header {
     border-bottom: 1px solid var(--borders);
 }
 
+header, main {
+    margin: 0 24px;
+}
+
 .subtitle {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-transform: capitalize;
 }
 
 .text-center {
     text-align: center;
+}
+
+.underline {
+    text-decoration: underline;
 }
 
 .form-search-top {
@@ -63,8 +93,8 @@ header {
 
 main {
     display: grid;
-    grid-template-columns: 20% 60% 20%;
-    height: calc(100vh - 68px);
+    grid-template-columns: 20% 55% 25%;
+    height: calc(100vh - 68px - 55px);
 }
 
 aside {
@@ -78,8 +108,8 @@ aside img {
 
 aside p {
     margin: 0;
-    padding: 10px 15px;
-    font-size: 1.1rem;
+    padding: 12px 15px;
+    font-size: 1rem;
     margin: 10px;
 }
 
@@ -124,6 +154,10 @@ aside p:first-child {
     margin-top: 20px;
 }
 
+#playlist .item:last-child {
+    border: none;
+}
+
 #playlist .item img {
     height: 24px;
     margin-right: 10px;
@@ -142,3 +176,51 @@ aside p:first-child {
     justify-content: center;
     align-items: center;
 }
+
+#player {
+    background-color: #292828;
+    color: white;
+    display: grid;
+    grid-template-columns: 30% 50% 20%;
+    padding: 17px 24px;
+    position: sticky;
+    bottom: 0;
+}
+
+#player > div {
+    display: flex;
+    align-items: center;
+}
+
+#player #controls {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+#player #controls img {
+    height: 24px;
+    cursor: pointer;
+}
+
+#player #controls .play-pause {
+    height: 32px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+#player #timer {
+    margin-left: 24px;
+    font-size: 0.8rem;
+}
+
+#player #title-track {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#player #volume {
+    display: flex;
+    justify-content: flex-end;
+}
+

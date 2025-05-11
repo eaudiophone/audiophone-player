@@ -14,7 +14,7 @@
 		<div id="root"></div>
 		<header>
 			<div class="header-title">
-				<img src="img/music-note.svg" alt="music-note" class="icons" />
+				<img src="img/note-double.svg" alt="music-note" class="icons" />
 				<h2 class="subtitle">Music</h2>
 			</div>
 			<div class="form-search-top">
@@ -35,10 +35,6 @@
 				<p>
 					<img src="img/home.svg" alt="home" />
 					<span>Principal</span>
-				</p>
-				<p>
-					<img src="img/music-album.svg" alt="music-album" style="background-color: white;" />
-					<span>Biblioteca</span>
 				</p>	
 			</aside>
 			<div class="main-cont">
@@ -51,13 +47,33 @@
 							Cargar archivos
 						</button>
 					</div>
+					<h3 class="text-center underline">Lista de reproducción:</h3>	
 					<div id="data">
 						<p class="text-center">No se cargaron archivos</p>
 					</div>
 				</div>
 			</div>
-			<script src="index.js"></script>
 		</main>
+		<!-- reproductor -->
+		<footer id="player">
+			<div>
+				<div id="controls">
+					<img class="icons" id="prev" src="img/prev.svg" alt="prev" />
+					<img class="play-pause" id="play-pause" src="img/pause.svg" alt="control" />
+					<img class="icons" id="next" src="img/next.svg" alt="next" style="height: 21px;" />
+				</div>
+				<div id="timer">
+					<span>0:00</span> / <span>0:00</span>
+				</div>
+			</div>
+			<div id="name-track">
+				<span id="title-track">Title playlist</span>
+			</div>
+			<div id="volume">
+				<img class="icons" src="img/sound-loud.svg" alt="sound" style="height: 24px;" />
+			</div>
+		</footer>
+		<script src="index.js"></script>
 	</body>
 </html>
 	
