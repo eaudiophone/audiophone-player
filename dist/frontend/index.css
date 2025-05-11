@@ -224,3 +224,7 @@ aside p:first-child {
     justify-content: flex-end;
 }
 
+#player #volume input[type="range"] {
+    margin-right: 15px;
+}
+
