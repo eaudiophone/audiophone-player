@@ -54,25 +54,28 @@
 			</div>
 		</main>
 		<!-- reproductor -->
-		<footer id="player">
-			<div>
-				<div id="controls">
-					<img class="icons" id="prev" src="img/prev.svg" alt="prev" />
-					<img class="play-pause" id="play-pause" src="img/pause.svg" alt="control" />
-					<img class="icons" id="next" src="img/next.svg" alt="next" style="height: 21px;" />
+		<div class="player-container">
+			<input type="range" id="progress" max="100" min="0" value="0" />
+			<footer id="player">
+				<div>
+					<div id="controls">
+						<img class="icons" id="prev" src="img/prev.svg" alt="prev" />
+						<img class="play-pause" id="play-pause" src="img/pause.svg" alt="control" />
+						<img class="icons" id="next" src="img/next.svg" alt="next" style="height: 21px;" />
+					</div>
+					<div id="timer">
+						<span>0:00</span> / <span>0:00</span>
+					</div>
 				</div>
-				<div id="timer">
-					<span>0:00</span> / <span>0:00</span>
+				<div id="name-track">
+					<span id="title-track">Title playlist</span>
 				</div>
-			</div>
-			<div id="name-track">
-				<span id="title-track">Title playlist</span>
-			</div>
-			<div id="volume">
-				<input type="range" id="indicator-volume" max="100" min="0" value="100" />
-				<img class="icons" src="img/sound-loud.svg" alt="sound" style="height: 24px;" />
-			</div>
-		</footer>
+				<div id="volume">
+					<input type="range" id="indicator-volume" max="100" min="0" value="100" />
+					<img class="icons" src="img/sound-loud.svg" alt="sound" style="height: 24px;" />
+				</div>
+			</footer>
+		</div>
 		<script src="zustand.js"></script>
 		<script src="index.js"></script>
 	</body>

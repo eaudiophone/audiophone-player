@@ -32,6 +32,7 @@ body {
     color: var(--foreground);
     margin: 0;
     font-family: 'Roboto';
+    overflow-x: hidden;
 }
 
 header {
@@ -95,7 +96,7 @@ header, main {
 main {
     display: grid;
     grid-template-columns: 20% 55% 25%;
-    height: calc(100vh - 68px - 55px);
+    height: calc(100vh - 68px - 54px);
 }
 
 aside {
@@ -178,14 +179,17 @@ aside p:first-child {
     align-items: center;
 }
 
+.player-container {
+    position: sticky;
+    bottom: 0;
+}
+
 #player {
     background-color: #292828;
     color: white;
     display: grid;
     grid-template-columns: 25% 50% 25%;
     padding: 17px 24px;
-    position: sticky;
-    bottom: 0;
 }
 
 #player > div {
@@ -230,7 +234,8 @@ aside p:first-child {
 }
 
 /** volumen indicator */
-footer #indicator-volume {
+footer #indicator-volume,
+.player-container #progress {
     -webkit-appearance: none;
     appearance: none;
     width: 30%;
@@ -250,4 +255,34 @@ footer #indicator-volume::-webkit-slider-thumb {
     border-radius: 50%;
     border: none;
     transition: .2s ease-in-out;
+}
+
+.player-container #progress {
+    width: 100%;
+    position: absolute;
+    top: -1px;
+    background: var(--borders);
+}
+
+.player-container #progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none; 
+    height: 15px;
+    width: 15px;
+    background-color: #f50;
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+}
+
+.player-container #progress::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 10px rgba(255,85,0, .1);
+}
+
+.player-container #progress:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px rgba(255,85,0, .2)
+}
+
+.player-container #progress:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px rgba(255,85,0, .2)
 }

@@ -170,6 +170,10 @@ const STORE = zustandVanilla.createStore(set => {
         element.style.background = (`linear-gradient(to right, var(--foreground) ${progress}%, var(--borders) ${progress}%)`);
     }
 
+    function handleProgress() {
+        
+    }
+
     // main ...
     if (!UI.uploadButton) return;
 
