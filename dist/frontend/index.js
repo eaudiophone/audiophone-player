@@ -33,7 +33,8 @@ const STORE = zustandVanilla.createStore(set => {
         uploadButton: document.querySelector('button#load-playlist'),
         playListData: document.querySelector('#playlist #data'),
         inputSearch: document.querySelector('#search'),
-        player: document.querySelector('footer#player')    
+        player: document.querySelector('footer#player'),
+        volume: document.querySelector('footer #indicator-volume'),    
     };
 
     /**
@@ -64,6 +65,9 @@ const STORE = zustandVanilla.createStore(set => {
 
         /** @type {State} */
         const state = STORE.getState();
+
+        // establecemos una copia en el session storage
+        window.sessionStorage.setItem('playlist', JSON.stringify(playlist));
         
         state.setPlaylist(playlist);
     }
@@ -73,11 +77,19 @@ const STORE = zustandVanilla.createStore(set => {
      * @param {InputEvent} event 
      */
     function searchTrack(event) {
+        /** @type {State} */
+        const state = STORE.getState();
+
         /** @type {string} */
         let value = event.target.value;
 
         if (value.length === 0) {
-            renderPlaylist();
+            /** @type {Array<Track>} */
+            const playList = JSON.parse(window.sessionStorage.getItem('playlist'));
+            
+            // reestablecemos los valores nuevamente en la lista
+            state.setPlaylist(playList);
+
             return;
         }
 
@@ -89,8 +101,6 @@ const STORE = zustandVanilla.createStore(set => {
             return;
         }
 
-        /** @type {State} */
-        const state = STORE.getState();
 
         // filtramos la lista
         const data = state.playlist.filter(list => {
@@ -149,6 +159,17 @@ const STORE = zustandVanilla.createStore(set => {
         title.innerText = state.selectedTrack.name;
     }
 
+    function handleVolume(event) {
+        const element = event.target;
+
+        let value = Number(element.value); 
+        let maxValue = Number(element.max);
+        let progress = (value / maxValue) * 100;
+        
+        // establecemos los estilos de la linea
+        element.style.background = (`linear-gradient(to right, var(--foreground) ${progress}%, var(--borders) ${progress}%)`);
+    }
+
     // main ...
     if (!UI.uploadButton) return;
 
@@ -157,6 +178,10 @@ const STORE = zustandVanilla.createStore(set => {
     if (!UI.inputSearch) return;
 
     UI.inputSearch.addEventListener('input', searchTrack);
+
+    if (!UI.volume) return;
+
+    UI.volume.addEventListener('input', handleVolume);
 
     // patron observador Zustand
     // nos subscribimos al cambio del estado

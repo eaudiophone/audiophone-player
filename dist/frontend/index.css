@@ -24,6 +24,7 @@
     --foreground: #fff;
     --borders: #3c3c3c;
     --background-form: rgba(136, 136, 136, .5);
+    --color-indicators: #f50;
 }
 
 body {
@@ -228,3 +229,25 @@ aside p:first-child {
     margin-right: 15px;
 }
 
+/** volumen indicator */
+footer #indicator-volume {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 45%;
+    cursor: pointer;
+    outline: none;
+    border-radius: 15px;
+    height: 6px;
+    background: var(--foreground);
+}
+
+footer #indicator-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none; 
+    height: 15px;
+    width: 15px;
+    background-color: var(--foreground);
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+}
