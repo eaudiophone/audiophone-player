@@ -233,11 +233,11 @@ aside p:first-child {
 footer #indicator-volume {
     -webkit-appearance: none;
     appearance: none;
-    width: 45%;
+    width: 30%;
     cursor: pointer;
     outline: none;
     border-radius: 15px;
-    height: 6px;
+    height: 2px;
     background: var(--foreground);
 }
 
