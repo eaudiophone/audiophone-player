@@ -1,10 +1,39 @@
+/**
+ * @typedef Track
+ * @type {Object}
+ * @property {string} name
+ * @property {number} index
+ * @property {string} filePath 
+ */
+
+/**
+ * @typedef State
+ * @type {Object}
+ * @property {Array<Track>} playlist
+ * @property {Track | null} selectedTrack
+ * @property {(playlist: Array<Track>) => void} setPlaylist
+ * @property {(playlist: Track) => void} setSelectedTrack
+ */
+
+const STORE = zustandVanilla.createStore(set => {
+    /** @type {State} */
+    const STATE = {
+        playlist: [],
+        selectedTrack: null,
+        setPlaylist: playlist => set({playlist}),
+        setSelectedTrack: track => set(state => ({...state, selectedTrack: track})), 
+    };
+
+    return STATE
+});
+
+
 (function () {
-    /** @type {Array<{name: string, filePath: string, index: number}>} */
-    let playlist = [];  // lista de reproduccion
     const UI = {
         uploadButton: document.querySelector('button#load-playlist'),
         playListData: document.querySelector('#playlist #data'),
         inputSearch: document.querySelector('#search'),
+        player: document.querySelector('footer#player')    
     };
 
     /**
@@ -13,25 +42,30 @@
      * @returns 
      */
     function loadTrack(index) {
-        if (playlist.length === 0) {
+        /** @type {State} */
+        const state = STORE.getState();
+        
+        if (state.playlist.length === 0) {
             console.error('No tracks loaded ...');
             return;
         }
 
-        const track = playlist[index];
-        console.log(track);
-        
         // procedemos a pasar los datos al componente del reproductor
+        const track = state.playlist.find(track => track.index === index) || null;
+        state.setSelectedTrack(track);
     }
 
     /**
      * Manejador del boton de carga de archivos
      */
     async function handleLoadButton() {
-        playlist = await window.API.loadFiles();
+        /** @type {Array<Track>} */
+        const playlist = await window.API.loadFiles();
 
-        if (!UI.playListData) return;
-        if (playlist.length > 0) renderPlaylist();
+        /** @type {State} */
+        const state = STORE.getState();
+        
+        state.setPlaylist(playlist);
     }
 
     /**
@@ -48,7 +82,6 @@
         }
 
         // validar datos alfanumericos ...
-
         value = value.toLowerCase(); // pasamos a lowercase
         
         if (!(/^[\w\s\d]{1,255}$/).test(value)) {
@@ -56,25 +89,30 @@
             return;
         }
 
+        /** @type {State} */
+        const state = STORE.getState();
+
         // filtramos la lista
-        const data = playlist.filter(list => {
+        const data = state.playlist.filter(list => {
             const position = (list.name.toLowerCase()).search(value);
 
             // devuelve las coincidencias
             return (position !== -1); 
         });
 
-        renderPlaylist(data);
+        state.setPlaylist(data);
     }
 
     /**
      * renderiza el listado de archivos de musica
-     * @param {Array<{name: string, filePath: string, index: number}>} [lists] 
+     * @param {State} state
+     * @param {State} prevState 
      */
-    function renderPlaylist(lists = playlist) {
-        if (lists.length === 0) return;
+    function renderPlaylist(state, prevState) {
+        if (state.playlist === prevState.playlist) return;
+        if (state.playlist.length === 0) return;
 
-        UI.playListData.innerHTML = lists.map(file => (`
+        UI.playListData.innerHTML = state.playlist.map(file => (`
             <div class="item" track="${file.index}">
                 <img src="img/play.svg" alt="play" class="icons" />
                 <span>${
@@ -93,6 +131,24 @@
         ));
     }
 
+    /**
+     * crea la instancia de howler e inicia el reproductor
+     * @param {State} state
+     * @param {State} prevState 
+     */
+    function loadTrackPlayer(state, prevState) {
+        if (state.selectedTrack === prevState.selectedTrack) return;
+
+        const title = UI.player.querySelector('#title-track');
+        
+        if (!state.selectedTrack) {
+            title.innerText = 'No track loaded';
+            return;
+        }
+
+        title.innerText = state.selectedTrack.name;
+    }
+
     // main ...
     if (!UI.uploadButton) return;
 
@@ -101,4 +157,9 @@
     if (!UI.inputSearch) return;
 
     UI.inputSearch.addEventListener('input', searchTrack);
+
+    // patron observador Zustand
+    // nos subscribimos al cambio del estado
+    STORE.subscribe(renderPlaylist); // renderiza la playlist cuando se cambia la playlist
+    STORE.subscribe(loadTrackPlayer); // carga el track seleccionado
 })();

@@ -181,7 +181,7 @@ aside p:first-child {
     background-color: #292828;
     color: white;
     display: grid;
-    grid-template-columns: 30% 50% 20%;
+    grid-template-columns: 25% 50% 25%;
     padding: 17px 24px;
     position: sticky;
     bottom: 0;
