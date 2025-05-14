@@ -13,6 +13,8 @@
  * @property {Track | null} selectedTrack
  * @property {(playlist: Array<Track>) => void} setPlaylist
  * @property {(playlist: Track) => void} setSelectedTrack
+ * @property {Howl | null} audio  instancia de Howl.js
+ * @property {(filePath: string) => void} setAudio
  */
 
 const STORE = zustandVanilla.createStore(set => {
@@ -20,23 +22,40 @@ const STORE = zustandVanilla.createStore(set => {
     const STATE = {
         playlist: [],
         selectedTrack: null,
+        audio: null,
         setPlaylist: playlist => set({playlist}),
         setSelectedTrack: track => set(state => ({...state, selectedTrack: track})), 
+        setAudio: filePath => set((state) => {
+            if (state.audio) state.audio.unload(); // desmonta el sonido si existe una instancia
+
+            const audio = new Howl({
+                src: [filePath],
+                onload: () => {
+                    console.log('Audio cargado correctamente', filePath);
+                    UI.buttonPlay.click();
+                },
+                onloaderror: (id, error) => {
+                    console.error('Error al cargar el audio', filePath, error);
+                }
+            }); 
+
+            return {...state, audio};
+        }),
     };
 
     return STATE
 });
 
+const UI = {
+    uploadButton: document.querySelector('button#load-playlist'),
+    playListData: document.querySelector('#playlist #data'),
+    inputSearch: document.querySelector('#search'),
+    player: document.querySelector('footer#player'),
+    volume: document.querySelector('footer #indicator-volume'), 
+    buttonPlay: document.querySelector('#play-pause'),   
+};
 
 (function () {
-    const UI = {
-        uploadButton: document.querySelector('button#load-playlist'),
-        playListData: document.querySelector('#playlist #data'),
-        inputSearch: document.querySelector('#search'),
-        player: document.querySelector('footer#player'),
-        volume: document.querySelector('footer #indicator-volume'),    
-    };
-
     /**
      * carga la pista en el reproductor
      * @param {number} index indice de la pista
@@ -61,7 +80,7 @@ const STORE = zustandVanilla.createStore(set => {
      */
     async function handleLoadButton() {
         /** @type {Array<Track>} */
-        const playlist = await window.API.loadFiles();
+        const playlist = await window.API.openFileDialog();
 
         /** @type {State} */
         const state = STORE.getState();
@@ -157,6 +176,9 @@ const STORE = zustandVanilla.createStore(set => {
         }
 
         title.innerText = state.selectedTrack.name;
+
+        // genera la instancia de Howler.js
+        state.setAudio(state.selectedTrack.filePath);
     }
 
     function handleVolume(event) {
@@ -170,8 +192,39 @@ const STORE = zustandVanilla.createStore(set => {
         element.style.background = (`linear-gradient(to right, var(--foreground) ${progress}%, var(--borders) ${progress}%)`);
     }
 
-    function handleProgress() {
+    /**
+     * maneja la reproduccion de la pista de audio
+     * @param {Event} event
+     */
+    function handlePlay({target}) {
+        /** @type {string} */
+        const value = target.getAttribute('value');
         
+        /** @type {State} */
+        const {audio} = STORE.getState();
+        
+        if (value === 'pause') {
+            target.setAttribute('value', 'play');
+            target.setAttribute('src', 'img/play.svg');
+
+            if (audio && audio.state() === 'loaded') {
+                audio.pause(); 
+            
+            } else if (audio && audio.state() !== 'loading') {
+                console.warn('No se ha cargado ningún archivo de audio o aún está cargando.');
+            }
+
+        } else if (value === 'play') {
+            target.setAttribute('value', 'pause');
+            target.setAttribute('src', 'img/pause.svg');
+
+            if (audio && audio.state() === 'loaded') {
+                audio.play();
+            
+            } else if (audio && audio.state() !== 'loading') {
+                console.warn('No se ha cargado ningún archivo de audio o aún está cargando.');
+            }
+        }
     }
 
     // main ...
@@ -186,6 +239,10 @@ const STORE = zustandVanilla.createStore(set => {
     if (!UI.volume) return;
 
     UI.volume.addEventListener('input', handleVolume);
+
+    if (!UI.buttonPlay) return;
+
+    UI.buttonPlay.addEventListener('click', handlePlay);
 
     // patron observador Zustand
     // nos subscribimos al cambio del estado

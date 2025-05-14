@@ -21,7 +21,7 @@ const createWindow = () => {
 // =========
 // Events
 // =========
-ipcMain.handle('loadFiles', async () => {
+ipcMain.handle('openFileDialog', async () => {
     const result = await dialog.showOpenDialog({
         title: 'Abrir archivo o carpeta',
         properties: ['openFile', 'multiSelections'],

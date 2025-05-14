@@ -15,7 +15,7 @@ var createWindow = () => {
   win.maximize();
   win.loadFile((0, import_path.join)(__dirname, "frontend", "index.html"));
 };
-import_electron.ipcMain.handle("loadFiles", async () => {
+import_electron.ipcMain.handle("openFileDialog", async () => {
   const result = await import_electron.dialog.showOpenDialog({
     title: "Abrir archivo o carpeta",
     properties: ["openFile", "multiSelections"],
