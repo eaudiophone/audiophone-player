@@ -27,12 +27,10 @@
             audio: null,
             setPlaylist: playlist => set(state => ({...state, playlist})),
             setSelectedTrack: track => set(state => ({...state, selectedTrack: track})), 
-            setAudio: filePath => set((state) => {
-                if (state.audio) {
-                    state.audio.unload(); // desmonta el sonido si existe una instancia
-                } 
-    
-                const audio = new Howl({
+            setAudio: filePath => set(state => {
+                if (state.audio) state.audio.unload(); // desmonta el sonido si existe una instancia
+            
+                const newAudio = new Howl({
                     src: [filePath],
                     // This should be used for large audio files so that you don't have to wait 
                     // for the full file to be downloaded and decoded before playing.
@@ -46,7 +44,7 @@
                     },
                 }); 
     
-                return {...state, audio};
+                return {...state, audio: newAudio};
             }),
         };
     
