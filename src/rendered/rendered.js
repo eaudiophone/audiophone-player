@@ -20,6 +20,7 @@
 
 (function () {
     const STORE = zustandVanilla.createStore(set => {
+        
         /** @type {State} */
         const STATE = {
             playlist: [],
@@ -29,22 +30,29 @@
             setSelectedTrack: track => set(state => ({...state, selectedTrack: track})), 
             setAudio: filePath => set(state => {
                 if (state.audio) state.audio.unload(); // desmonta el sonido si existe una instancia
-            
-                const newAudio = new Howl({
+                
+                // crea una referencia local que apunta al mismo objeto de sonido
+                // para acceder al objeto sound dentro del objeto de config de howler
+                let sound = state.audio = new Howl({
                     src: [filePath],
-                    // This should be used for large audio files so that you don't have to wait 
-                    // for the full file to be downloaded and decoded before playing.
-                    html5: true,
-
+                    html5: true, // html5 straming, ideal para grandes buffer de datos
                     onload: () => {
                         UI.buttonPlay.click();
                     },
                     onloaderror: (id, error) => {
                         console.error('Error al cargar el audio', filePath, error);
                     },
+                    onplay: () => {
+                        if (!UI.durationTrack) return;
+                        
+                        let duration = sound.duration();
+                        UI.durationTrack.innerHTML = formatTime(Math.round(duration));
+
+                        requestAnimationFrame(updateTimer);
+                    }
                 }); 
     
-                return {...state, audio: newAudio};
+                return {...state, audio: sound};
             }),
         };
     
@@ -58,6 +66,9 @@
         player: document.querySelector('footer#player'),
         volume: document.querySelector('footer #indicator-volume'), 
         buttonPlay: document.querySelector('#play-pause'),   
+        durationTrack: document.querySelector('span#duration'),
+        timerTrack: document.querySelector('span#timer'),
+        progress: document.querySelector('#progress')
     };
 
 
@@ -255,6 +266,39 @@
             
             }
         }
+    }
+
+
+    /**
+     * aplica un formato de tiempo de segundos a M:SS
+     * @param {number} seconds Segundos a formatear
+     * @returns {string} tiempo formateado
+    */
+    function formatTime(seconds) {
+        let minutes = Math.floor(seconds / 60) || 0;
+        let secs = (seconds - minutes * 60) || 0;
+
+        return (`${minutes}:${secs < 10 ? '0' : ''}${secs}`);
+    }
+
+    function updateTimer() {
+        /** @type {State} */
+        const {audio} = STORE.getState();
+        const seek = audio.seek() || 0;
+
+        if (UI.timerTrack) UI.timerTrack.innerHTML = formatTime(Math.round(seek));
+
+        let width = ((seek / audio.duration()) * 100) || 0;
+
+        if (UI.progress) {
+            UI.progress.value = width.toString();  
+
+            // establecemos los estilos de la linea
+            UI.progress.style.background = (`linear-gradient(to right, var(--color-indicators) ${width}%, var(--borders) ${width}%)`);
+        } 
+
+        // ejecuta la animacion mientras se reproduce la pista
+        if (audio.playing()) requestAnimationFrame(updateTimer);
     }
 
     // main ...

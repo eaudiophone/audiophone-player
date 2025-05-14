@@ -95,7 +95,7 @@ header, main {
 
 main {
     display: grid;
-    grid-template-columns: 20% 55% 25%;
+    grid-template-columns: 20% 50% 30%;
     height: calc(100vh - 68px - 54px);
 }
 
@@ -137,6 +137,7 @@ aside p:first-child {
     cursor: pointer;
     border-radius: 9999px;
     outline: none;
+    font-size: 0.9rem;
 }
 
 #playlist button:hover {
@@ -266,14 +267,15 @@ footer #indicator-volume::-webkit-slider-thumb {
     width: 100%;
     position: absolute;
     top: -1px;
+    height: 3px;
     background: var(--borders);
 }
 
 .player-container #progress::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none; 
-    height: 15px;
-    width: 15px;
+    height: 0;
+    width: 0;
     background-color: #f50;
     border-radius: 50%;
     border: none;

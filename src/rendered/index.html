@@ -55,7 +55,7 @@
 		</main>
 		<!-- reproductor -->
 		<div class="player-container">
-			<input type="range" id="progress" max="100" min="0" value="0" />
+			<input type="range" readonly id="progress" max="100" min="0" value="0" />
 			<footer id="player">
 				<div>
 					<div id="controls">
@@ -64,7 +64,7 @@
 						<img class="icons" id="next" src="img/next.svg" alt="next" style="height: 21px;" />
 					</div>
 					<div id="timer">
-						<span>0:00</span> / <span>0:00</span>
+						<span id="timer">0:00</span> / <span id="duration">0:00</span>
 					</div>
 				</div>
 				<div id="name-track">
