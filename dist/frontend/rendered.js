@@ -31,19 +31,19 @@ const STORE = zustandVanilla.createStore(set => {
             const audio = new Howl({
                 src: [filePath],
                 onload: () => {
-                    console.log('Audio cargado correctamente', filePath);
+                    // console.log('Audio cargado correctamente', filePath);
                     UI.buttonPlay.click();
                 },
                 onloaderror: (id, error) => {
                     console.error('Error al cargar el audio', filePath, error);
-                }
+                },
             }); 
 
             return {...state, audio};
         }),
     };
 
-    return STATE
+    return STATE;
 });
 
 const UI = {
@@ -181,6 +181,10 @@ const UI = {
         state.setAudio(state.selectedTrack.filePath);
     }
 
+    /**
+     * manejador de instancias de howler
+     * @param {Event} event 
+     */
     function handleVolume(event) {
         const element = event.target;
 
@@ -190,6 +194,9 @@ const UI = {
         
         // establecemos los estilos de la linea
         element.style.background = (`linear-gradient(to right, var(--foreground) ${progress}%, var(--borders) ${progress}%)`);
+        
+        // establece el volumen global de todas las instancias de Howler
+        Howler.volume(value / 100);
     }
 
     /**
@@ -212,6 +219,7 @@ const UI = {
             
             } else if (audio && audio.state() !== 'loading') {
                 console.warn('No se ha cargado ningún archivo de audio o aún está cargando.');
+            
             }
 
         } else if (value === 'play') {
@@ -223,6 +231,7 @@ const UI = {
             
             } else if (audio && audio.state() !== 'loading') {
                 console.warn('No se ha cargado ningún archivo de audio o aún está cargando.');
+            
             }
         }
     }
