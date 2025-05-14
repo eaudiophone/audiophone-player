@@ -223,10 +223,11 @@
      */
     function handlePlay({target}) {
         /** @type {State} */
-        const {audio, playlist} = STORE.getState();
+        const {audio, playlist, selectedTrack} = STORE.getState();
 
         // validamos si existe alguna pista en la playlist
-        if (playlist.length === 0) return;
+        let isNotReady = playlist.length === 0 || !selectedTrack;
+        if (isNotReady) return;
 
         /** @type {'pause' | 'play'} */
         const value = target.getAttribute('value');
