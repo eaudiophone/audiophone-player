@@ -1,7 +1,5 @@
-
-/* create by create-app-cli */
-import {join} from 'path';
-import {app, BrowserWindow, ipcMain, dialog} from 'electron';
+const {join} = require('path');
+const {BrowserWindow, ipcMain, app, dialog} = require('electron');
 
 const createWindow = () => {
 	const win = new BrowserWindow({
@@ -15,7 +13,7 @@ const createWindow = () => {
 
 	win.maximize();
 	// win.setMenu(null); // establecer en production
-	win.loadFile(join(__dirname, 'frontend', 'index.html'));
+	win.loadFile(join(__dirname, 'rendered', 'index.html'));
 };
 
 // =========
@@ -61,4 +59,3 @@ app.whenReady()
 app.on('window-all-closed', () => {
 	if ( process.platform !== 'darwin' ) app.quit();
 });
-	

@@ -17,45 +17,49 @@
  * @property {(filePath: string) => void} setAudio
  */
 
-const STORE = zustandVanilla.createStore(set => {
-    /** @type {State} */
-    const STATE = {
-        playlist: [],
-        selectedTrack: null,
-        audio: null,
-        setPlaylist: playlist => set({playlist}),
-        setSelectedTrack: track => set(state => ({...state, selectedTrack: track})), 
-        setAudio: filePath => set((state) => {
-            if (state.audio) state.audio.unload(); // desmonta el sonido si existe una instancia
+(function () {
+    const STORE = zustandVanilla.createStore(set => {
+        /** @type {State} */
+        const STATE = {
+            playlist: [],
+            selectedTrack: null,
+            audio: null,
+            setPlaylist: playlist => set({playlist}),
+            setSelectedTrack: track => set(state => ({...state, selectedTrack: track})), 
+            setAudio: filePath => set((state) => {
+                if (state.audio) state.audio.unload(); // desmonta el sonido si existe una instancia
+    
+                const audio = new Howl({
+                    src: [filePath],
+                    // This should be used for large audio files so that you don't have to wait 
+                    // for the full file to be downloaded and decoded before playing.
+                    html5: true,
 
-            const audio = new Howl({
-                src: [filePath],
-                onload: () => {
-                    // console.log('Audio cargado correctamente', filePath);
-                    UI.buttonPlay.click();
-                },
-                onloaderror: (id, error) => {
-                    console.error('Error al cargar el audio', filePath, error);
-                },
-            }); 
-
-            return {...state, audio};
-        }),
+                    onload: () => {
+                        // console.log('Audio cargado correctamente', filePath);
+                        UI.buttonPlay.click();
+                    },
+                    onloaderror: (id, error) => {
+                        console.error('Error al cargar el audio', filePath, error);
+                    },
+                }); 
+    
+                return {...state, audio};
+            }),
+        };
+    
+        return STATE;
+    });
+    
+    const UI = {
+        uploadButton: document.querySelector('button#load-playlist'),
+        playListData: document.querySelector('#playlist #data'),
+        inputSearch: document.querySelector('#search'),
+        player: document.querySelector('footer#player'),
+        volume: document.querySelector('footer #indicator-volume'), 
+        buttonPlay: document.querySelector('#play-pause'),   
     };
 
-    return STATE;
-});
-
-const UI = {
-    uploadButton: document.querySelector('button#load-playlist'),
-    playListData: document.querySelector('#playlist #data'),
-    inputSearch: document.querySelector('#search'),
-    player: document.querySelector('footer#player'),
-    volume: document.querySelector('footer #indicator-volume'), 
-    buttonPlay: document.querySelector('#play-pause'),   
-};
-
-(function () {
     /**
      * carga la pista en el reproductor
      * @param {number} index indice de la pista
@@ -204,13 +208,17 @@ const UI = {
      * @param {Event} event
      */
     function handlePlay({target}) {
-        /** @type {string} */
+        /** @type {State} */
+        const {audio, playlist} = STORE.getState();
+
+        // validamos si existe alguna pista en la playlist
+        if (playlist.length === 0) return;
+
+        /** @type {'pause' | 'play'} */
         const value = target.getAttribute('value');
         
-        /** @type {State} */
-        const {audio} = STORE.getState();
-        
         if (value === 'pause') {
+            // cambia la imagen del boton 
             target.setAttribute('value', 'play');
             target.setAttribute('src', 'img/play.svg');
 
@@ -221,8 +229,9 @@ const UI = {
                 console.warn('No se ha cargado ningún archivo de audio o aún está cargando.');
             
             }
-
-        } else if (value === 'play') {
+        }
+        
+        if (value === 'play') {
             target.setAttribute('value', 'pause');
             target.setAttribute('src', 'img/pause.svg');
 
