@@ -1,3 +1,5 @@
+'use strict';
+
 const {join} = require('path');
 const {BrowserWindow, ipcMain, app, dialog} = require('electron');
 
@@ -36,7 +38,7 @@ ipcMain.handle('openFileDialog', async () => {
         const resultSplit = filePath.split('/');
         const name = resultSplit[resultSplit.length - 1];
         
-        return {name, filePath, index};
+        return {name, filePath, index, selected: false};
     });
 
     return files;

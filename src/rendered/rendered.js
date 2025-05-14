@@ -4,6 +4,7 @@
  * @property {string} name
  * @property {number} index
  * @property {string} filePath 
+ * @property {boolean} selected
  */
 
 /**
@@ -27,7 +28,9 @@
             setPlaylist: playlist => set({playlist}),
             setSelectedTrack: track => set(state => ({...state, selectedTrack: track})), 
             setAudio: filePath => set((state) => {
-                if (state.audio) state.audio.unload(); // desmonta el sonido si existe una instancia
+                if (state.audio) {
+                    state.audio.unload(); // desmonta el sonido si existe una instancia
+                } 
     
                 const audio = new Howl({
                     src: [filePath],
@@ -60,6 +63,7 @@
         buttonPlay: document.querySelector('#play-pause'),   
     };
 
+
     /**
      * carga la pista en el reproductor
      * @param {number} index indice de la pista
@@ -74,8 +78,16 @@
             return;
         }
 
+        const newPlaylist = state.playlist.map(track => {
+            if (track.index === index) return {...track, selected: true};
+    
+            return {...track, selected: false};
+        });
+
+        state.setPlaylist(newPlaylist);
+
         // procedemos a pasar los datos al componente del reproductor
-        const track = state.playlist.find(track => track.index === index) || null;
+        const track = newPlaylist[index] || null;
         state.setSelectedTrack(track);
     }
 
@@ -145,16 +157,18 @@
         if (state.playlist === prevState.playlist) return;
         if (state.playlist.length === 0) return;
 
-        UI.playListData.innerHTML = state.playlist.map(file => (`
-            <div class="item" track="${file.index}">
-                <img src="img/play.svg" alt="play" class="icons" />
-                <span>${
-                    file.name.length > 35 ? 
-                        file.name.slice(0, 35) + '...' : 
-                        file.name
-                }</span>
-            </div>    
-        `)).join('');
+        UI.playListData.innerHTML = state.playlist.map(file => {
+            return (`
+                <div class="item ${file.selected ? 'selected' : ''}" track="${file.index}">
+                    <img src="img/play.svg" alt="play" class="icons" />
+                    <span>${
+                        file.name.length > 35 ? 
+                            file.name.slice(0, 35) + '...' : 
+                            file.name
+                    }</span>
+                </div>    
+            `);
+        }).join('');
         
         // añadimos los eventos de click
         const items = Array.from(UI.playListData.querySelectorAll('.item'));

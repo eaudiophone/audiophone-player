@@ -165,9 +165,14 @@ aside p:first-child {
     margin-right: 10px;
 }
 
-#playlist .item:hover {
+#playlist .selected {
     background-color: var(--borders);
 }
+
+#playlist .item:hover {
+    background-color: rgba(136, 136, 136, .2);
+}
+
 
 .main-img {
     max-width: 65%;
