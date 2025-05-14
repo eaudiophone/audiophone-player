@@ -25,7 +25,7 @@
             playlist: [],
             selectedTrack: null,
             audio: null,
-            setPlaylist: playlist => set({playlist}),
+            setPlaylist: playlist => set(state => ({...state, playlist})),
             setSelectedTrack: track => set(state => ({...state, selectedTrack: track})), 
             setAudio: filePath => set((state) => {
                 if (state.audio) {
@@ -39,7 +39,6 @@
                     html5: true,
 
                     onload: () => {
-                        // console.log('Audio cargado correctamente', filePath);
                         UI.buttonPlay.click();
                     },
                     onloaderror: (id, error) => {
