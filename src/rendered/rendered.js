@@ -318,7 +318,7 @@
      */
     function skipTo(direction = 'next') {
         /** @type {State} */
-        const {playlist, selectedTrack, audio, setSelectedTrack} = STORE.getState();
+        const {playlist, selectedTrack, audio, setSelectedTrack, setPlaylist} = STORE.getState();
         
         if (playlist.length === 0) return;
 
@@ -347,7 +347,41 @@
         UI.progress.value = 0;
         UI.progress.style.background = (`var(--borders)`);
 
+        // actualiza la lista con la nueva posicion seleccionada
+        // para señalar el nuevo elemento
+        const newPlaylist = playlist.map(track => {
+            if (track.index === index) {
+                return {...track, selected: true};
+            }
+            
+            return {...track, selected: false};
+        });
+
+        setPlaylist(newPlaylist);
+
         setSelectedTrack(playlist[index]);
+    }
+
+    /**
+     * salta a cualquier seccion de la pista
+     * @param {MouseEvent} event 
+     */
+    function jumpTo(event) {
+        /** @type {State} */
+        const {playlist, selectedTrack, audio} = STORE.getState();
+        
+        if (playlist.length === 0 || !selectedTrack) return;
+        
+        // permite obtener el porcentaje de la posicion donde se hace 
+        // click al indicador
+        let per = event.clientX / window.innerWidth;
+
+        // aplicamos el salto y luego la animacion
+        if (audio.playing()) {
+            audio.seek(audio.duration() * per);
+            
+            requestAnimationFrame(updateTimer);
+        } 
     }
 
     // main ...
@@ -374,6 +408,10 @@
     if (!UI.nextTrack) return;
 
     UI.nextTrack.addEventListener('click', () => skipTo('next'));
+
+    if (!UI.progress) return;
+
+    UI.progress.addEventListener('click', jumpTo);
 
     // patron observador Zustand
     // nos subscribimos al cambio del estado
