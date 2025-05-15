@@ -1,6 +1,6 @@
 'use strict';
 
-const {join} = require('path');
+const {join, delimiter} = require('path');
 const {BrowserWindow, ipcMain, app, dialog} = require('electron');
 
 const createWindow = () => {
@@ -33,9 +33,12 @@ ipcMain.handle('openFileDialog', async () => {
 
     if (result.canceled) return;
 
+	// separator multiplataforma
+	const separator = (process.platform === 'linux' || process.platform === 'darwin') ?  '/' : '\\';
+
     // realizamos una lectura del archivo para obtener los datos del buffer
     const files = result.filePaths.map((filePath, index) => {
-        const resultSplit = filePath.split('/');
+        const resultSplit = filePath.split(separator);
         const name = resultSplit[resultSplit.length - 1];
         
         return {name, filePath, index, selected: false};

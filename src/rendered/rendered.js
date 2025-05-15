@@ -37,9 +37,7 @@
                     src: [filePath],
                     html5: true, // html5 streaming, ideal para grandes buffer de datos
                     onload: () => {
-                        if (UI.buttonPlay.getAttribute('value') === 'play') {
-                            UI.buttonPlay.click();
-                        }
+                        if (UI.buttonPlay.getAttribute('value') === 'play') UI.buttonPlay.click();
                     },
                     onloaderror: (id, error) => {
                         console.error('Error al cargar el audio', filePath, error);
@@ -53,9 +51,11 @@
                         requestAnimationFrame(updateTimer);
                     },
                     onend: () => {
-                        if (UI.buttonPlay.getAttribute('value') === 'pause') {
-                            UI.buttonPlay.click();
-                        } 
+                        if (UI.buttonPlay.getAttribute('value') === 'pause') UI.buttonPlay.click();
+
+                        // pasamos a la siguiente valor de la lista de reproduccion 
+                        // si no es el ultima pista
+                        if (state.selectedTrack.index !== (state.playlist.length - 1)) UI.nextTrack.click();
                     }
                 }); 
     
@@ -78,6 +78,7 @@
         progress: document.querySelector('#progress'),
         nextTrack: document.querySelector('#next'),
         prevTrack: document.querySelector('#prev'),
+        titleTrack: document.querySelector('#title-track'),
     };
 
 
@@ -203,14 +204,14 @@
     function loadTrackPlayer(state, prevState) {
         if (state.selectedTrack === prevState.selectedTrack) return;
 
-        const title = UI.player.querySelector('#title-track');
+        if (!UI.titleTrack) return;
         
         if (!state.selectedTrack) {
             title.innerText = 'No track loaded';
             return;
         }
 
-        title.innerText = state.selectedTrack.name;
+        UI.titleTrack.innerText = state.selectedTrack.name;
 
         // genera la instancia de Howler.js
         state.setAudio(state.selectedTrack.filePath);
