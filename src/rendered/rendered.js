@@ -19,7 +19,8 @@
  */
 
 (function () {
-    const STORE = zustandVanilla.createStore(set => {
+    /** inicializa el estado de la aplicacion */    
+    function initState(set) {
         
         /** @type {State} */
         const STATE = {
@@ -64,24 +65,8 @@
         };
     
         return STATE;
-    });
-    
-    const UI = {
-        uploadButton: document.querySelector('button#load-playlist'),
-        playListData: document.querySelector('#playlist #data'),
-        inputSearch: document.querySelector('#search'),
-        player: document.querySelector('footer#player'),
-        volume: document.querySelector('footer #indicator-volume'), 
-        buttonPlay: document.querySelector('#play-pause'),   
-        durationTrack: document.querySelector('span#duration'),
-        timerTrack: document.querySelector('span#timer'),
-        progress: document.querySelector('#progress'),
-        nextTrack: document.querySelector('#next'),
-        prevTrack: document.querySelector('#prev'),
-        titleTrack: document.querySelector('#title-track'),
     };
-
-
+    
     /**
      * carga la pista en el reproductor
      * @param {number} index indice de la pista
@@ -413,6 +398,22 @@
     if (!UI.progress) return;
 
     UI.progress.addEventListener('click', jumpTo);
+
+    const STORE = zustandVanilla.createStore(initState);
+    const UI = {
+        uploadButton: document.querySelector('button#load-playlist'),
+        playListData: document.querySelector('#playlist #data'),
+        inputSearch: document.querySelector('#search'),
+        player: document.querySelector('footer#player'),
+        volume: document.querySelector('footer #indicator-volume'), 
+        buttonPlay: document.querySelector('#play-pause'),   
+        durationTrack: document.querySelector('span#duration'),
+        timerTrack: document.querySelector('span#timer'),
+        progress: document.querySelector('#progress'),
+        nextTrack: document.querySelector('#next'),
+        prevTrack: document.querySelector('#prev'),
+        titleTrack: document.querySelector('#title-track'),
+    };
 
     // patron observador Zustand
     // nos subscribimos al cambio del estado
