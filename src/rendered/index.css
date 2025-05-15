@@ -282,7 +282,7 @@ footer #indicator-volume::-webkit-slider-thumb {
     transition: .2s ease-in-out;
 }
 
-.player-container #progress::-webkit-slider-thumb:hover {
+/*.player-container #progress::-webkit-slider-thumb:hover {
     box-shadow: 0 0 0 10px rgba(255,85,0, .1);
 }
 
@@ -292,4 +292,4 @@ footer #indicator-volume::-webkit-slider-thumb {
 
 .player-container #progress:focus::-webkit-slider-thumb {
     box-shadow: 0 0 0 13px rgba(255,85,0, .2)
-}
+}*/

@@ -13,7 +13,7 @@
  * @property {Array<Track>} playlist
  * @property {Track | null} selectedTrack
  * @property {(playlist: Array<Track>) => void} setPlaylist
- * @property {(playlist: Track) => void} setSelectedTrack
+ * @property {(track: Track) => void} setSelectedTrack
  * @property {Howl | null} audio  instancia de Howl.js
  * @property {(filePath: string) => void} setAudio
  */
@@ -35,9 +35,11 @@
                 // para acceder al objeto sound dentro del objeto de config de howler
                 let sound = state.audio = new Howl({
                     src: [filePath],
-                    html5: true, // html5 straming, ideal para grandes buffer de datos
+                    html5: true, // html5 streaming, ideal para grandes buffer de datos
                     onload: () => {
-                        UI.buttonPlay.click();
+                        if (UI.buttonPlay.getAttribute('value') === 'play') {
+                            UI.buttonPlay.click();
+                        }
                     },
                     onloaderror: (id, error) => {
                         console.error('Error al cargar el audio', filePath, error);
@@ -49,6 +51,11 @@
                         UI.durationTrack.innerHTML = formatTime(Math.round(duration));
 
                         requestAnimationFrame(updateTimer);
+                    },
+                    onend: () => {
+                        if (UI.buttonPlay.getAttribute('value') === 'pause') {
+                            UI.buttonPlay.click();
+                        } 
                     }
                 }); 
     
@@ -68,7 +75,9 @@
         buttonPlay: document.querySelector('#play-pause'),   
         durationTrack: document.querySelector('span#duration'),
         timerTrack: document.querySelector('span#timer'),
-        progress: document.querySelector('#progress')
+        progress: document.querySelector('#progress'),
+        nextTrack: document.querySelector('#next'),
+        prevTrack: document.querySelector('#prev'),
     };
 
 
@@ -281,6 +290,9 @@
         return (`${minutes}:${secs < 10 ? '0' : ''}${secs}`);
     }
 
+    /**
+     * funcion que controla la actualizacion del tiempo
+     */
     function updateTimer() {
         /** @type {State} */
         const {audio} = STORE.getState();
@@ -291,14 +303,51 @@
         let width = ((seek / audio.duration()) * 100) || 0;
 
         if (UI.progress) {
-            UI.progress.value = width.toString();  
-
             // establecemos los estilos de la linea
+            UI.progress.value = width;  
             UI.progress.style.background = (`linear-gradient(to right, var(--color-indicators) ${width}%, var(--borders) ${width}%)`);
         } 
 
         // ejecuta la animacion mientras se reproduce la pista
         if (audio.playing()) requestAnimationFrame(updateTimer);
+    }
+
+    /**
+     * salta a la pista siguiente
+     * @param {'next' | 'prev'} direction 
+     */
+    function skipTo(direction = 'next') {
+        /** @type {State} */
+        const {playlist, selectedTrack, audio, setSelectedTrack} = STORE.getState();
+        
+        if (playlist.length === 0) return;
+
+        let index = selectedTrack.index || 0;
+
+        if (direction === 'prev') {
+            index = selectedTrack.index - 1;
+            
+            // nos ubica al ultimo de la lista
+            if (index < 0) index = playlist.length - 1;
+        }
+
+        if (direction === 'next') {
+            index = selectedTrack.index + 1;
+            
+            // si alcanza el limite retrocede al primer elemento
+            if (index >= playlist.length) index = 0;
+        }
+
+        // detiene la pista actual
+        audio.stop();
+        if (UI.buttonPlay.getAttribute('value') === 'pause') UI.buttonPlay.click();
+
+        // reset progress
+        // establecemos los estilos de la linea
+        UI.progress.value = 0;
+        UI.progress.style.background = (`var(--borders)`);
+
+        setSelectedTrack(playlist[index]);
     }
 
     // main ...
@@ -317,6 +366,14 @@
     if (!UI.buttonPlay) return;
 
     UI.buttonPlay.addEventListener('click', handlePlay);
+
+    if (!UI.prevTrack) return;
+
+    UI.prevTrack.addEventListener('click', () => skipTo('prev'));
+
+    if (!UI.nextTrack) return;
+
+    UI.nextTrack.addEventListener('click', () => skipTo('next'));
 
     // patron observador Zustand
     // nos subscribimos al cambio del estado
