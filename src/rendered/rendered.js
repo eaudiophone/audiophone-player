@@ -19,6 +19,21 @@
  */
 
 (function () {
+    const UI = {
+        uploadButton: document.querySelector('button#load-playlist'),
+        playListData: document.querySelector('#playlist #data'),
+        inputSearch: document.querySelector('#search'),
+        player: document.querySelector('footer#player'),
+        volume: document.querySelector('footer #indicator-volume'), 
+        buttonPlay: document.querySelector('#play-pause'),   
+        durationTrack: document.querySelector('span#duration'),
+        timerTrack: document.querySelector('span#timer'),
+        progress: document.querySelector('#progress'),
+        nextTrack: document.querySelector('#next'),
+        prevTrack: document.querySelector('#prev'),
+        titleTrack: document.querySelector('#title-track'),
+    };
+
     /** inicializa el estado de la aplicacion */    
     function initState(set) {
         
@@ -81,16 +96,18 @@
             return;
         }
 
+        // se genera una playlist nueva
         const newPlaylist = state.playlist.map(track => {
             if (track.index === index) return {...track, selected: true};
-    
             return {...track, selected: false};
         });
+        
+        console.log(newPlaylist);
 
         state.setPlaylist(newPlaylist);
 
         // procedemos a pasar los datos al componente del reproductor
-        const track = newPlaylist[index] || null;
+        const track = newPlaylist.find(track => track.index === index) || null;
         state.setSelectedTrack(track);
     }
 
@@ -120,35 +137,60 @@
 
         /** @type {string} */
         let value = event.target.value;
+        
+        /** @type {Array<Track>} */
+        let playList = [];
 
         if (value.length === 0) {
+            // obtenemos desde el session storage
+            // luego verificamos si existe una pista seleccionada
+            // y la marcamos para que aparezca seleccionado en pista
+
             /** @type {Array<Track>} */
-            const playList = JSON.parse(window.sessionStorage.getItem('playlist'));
+            playList = JSON
+                .parse(window.sessionStorage.getItem('playlist'))
+                .map(track => {
+                    if (track.index === state.selectedTrack.index) {
+                        return {...track, selected: true};
+                    }
+
+                    return track;
+                });
+
+        } else {
+            // validar datos alfanumericos ...
+            value = value.toLowerCase(); // pasamos a lowercase
             
-            // reestablecemos los valores nuevamente en la lista
-            state.setPlaylist(playList);
-
-            return;
-        }
-
-        // validar datos alfanumericos ...
-        value = value.toLowerCase(); // pasamos a lowercase
-        
-        if (!(/^[\w\s\d]{1,255}$/).test(value)) {
-            console.error(new Error('Solo caracteres alfanúmericos'));
-            return;
-        }
-
-
-        // filtramos la lista
-        const data = state.playlist.filter(list => {
-            const position = (list.name.toLowerCase()).search(value);
-
+            if (!(/^[\w\s\d]{1,255}$/).test(value)) {
+                console.error(new Error('Solo caracteres alfanúmericos'));
+                return;
+            }
+    
+            // filtramos la lista
             // devuelve las coincidencias
-            return (position !== -1); 
-        });
+            playList = state.playlist.filter(list => {
+                const position = (list.name.toLowerCase()).search(value);
+                return (position !== -1); 
+            });
+        }
 
-        state.setPlaylist(data);
+        // actualizamos la nuevo playlist
+        state.setPlaylist(playList);
+    }
+
+    /** cambia la pista en el reproductor */
+    function switchTrack() {
+        /** @type {State} */
+        const {audio} = STORE.getState();
+
+        audio.stop();
+
+        // cambiamos los atributos del boton
+        UI.buttonPlay.setAttribute('value', 'pause');
+        UI.buttonPlay.setAttribute('src', 'img/play.svg');
+
+        // reproducimos la nueva pista
+        UI.buttonPlay.click();
     }
 
     /**
@@ -192,9 +234,12 @@
         if (!UI.titleTrack) return;
         
         if (!state.selectedTrack) {
-            title.innerText = 'No track loaded';
+            UI.titleTrack.innerText = 'No track loaded';            
             return;
         }
+        
+        // cambia la pista
+        if (state.audio && state.audio.playing()) switchTrack();
 
         UI.titleTrack.innerText = state.selectedTrack.name;
 
@@ -363,11 +408,7 @@
         let per = event.clientX / window.innerWidth;
 
         // aplicamos el salto y luego la animacion
-        if (audio.playing()) {
-            audio.seek(audio.duration() * per);
-            
-            requestAnimationFrame(updateTimer);
-        } 
+        if (audio.playing()) audio.seek(audio.duration() * per);
     }
 
     // main ...
@@ -400,21 +441,7 @@
     UI.progress.addEventListener('click', jumpTo);
 
     const STORE = zustandVanilla.createStore(initState);
-    const UI = {
-        uploadButton: document.querySelector('button#load-playlist'),
-        playListData: document.querySelector('#playlist #data'),
-        inputSearch: document.querySelector('#search'),
-        player: document.querySelector('footer#player'),
-        volume: document.querySelector('footer #indicator-volume'), 
-        buttonPlay: document.querySelector('#play-pause'),   
-        durationTrack: document.querySelector('span#duration'),
-        timerTrack: document.querySelector('span#timer'),
-        progress: document.querySelector('#progress'),
-        nextTrack: document.querySelector('#next'),
-        prevTrack: document.querySelector('#prev'),
-        titleTrack: document.querySelector('#title-track'),
-    };
-
+    
     // patron observador Zustand
     // nos subscribimos al cambio del estado
     STORE.subscribe(renderPlaylist); // renderiza la playlist cuando se cambia la playlist
