@@ -102,7 +102,7 @@
             return {...track, selected: false};
         });
         
-        console.log(newPlaylist);
+        // console.log(newPlaylist);
 
         state.setPlaylist(newPlaylist);
 
@@ -230,9 +230,8 @@
      */
     function loadTrackPlayer(state, prevState) {
         if (state.selectedTrack === prevState.selectedTrack) return;
-
         if (!UI.titleTrack) return;
-        
+
         if (!state.selectedTrack) {
             UI.titleTrack.innerText = 'No track loaded';            
             return;

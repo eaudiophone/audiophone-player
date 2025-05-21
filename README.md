@@ -13,12 +13,15 @@ casa y trabajo con un toque mas moderno y profesional.
 ## Que se aprendio
 - Uso de las bibliotecas 
 - Repaso de la gestión de Arrays
-- Patrón de diseño Observador, para mantener la pista seleccionada, los playlists
-y la instancia de howler.js
+- Implementacion del patrón de diseño Observador, para mantener el control de la pista
+seleccionada.
 
 ### instalacion de dependencias
 ```
     yarn install  # instala las dependencias
     yarn start  # inicia electron en modo desarrollo    
-    yarn package  # enpaqueta la aplicación
+    yarn package  # enpaqueta la aplicación para el sistema operativo
 ```
+
+Se recomienda leer la documentacion de electron forge para especificar
+los paquetes para produccion del sistema operativo.
