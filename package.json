@@ -13,6 +13,9 @@
     "license": "MIT",
     "config": {
         "forge": {
+            "packagerConfig": {
+                "icon": "src/icons/logo_audiophone_65x65.ico"
+            },
             "makers": [
                 {
                     "config": {},
@@ -34,8 +37,7 @@
                     ],
                     "name": "@electron-forge/maker-zip"
                 }
-            ],
-            "packagerConfig": {}
+            ]
         }
     },
     "devDependencies": {

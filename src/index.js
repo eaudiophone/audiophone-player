@@ -1,10 +1,12 @@
 'use strict';
 
 const {join} = require('path');
-const {BrowserWindow, ipcMain, app, dialog} = require('electron');
+const {BrowserWindow, ipcMain, app, dialog, nativeImage} = require('electron');
 
 const createWindow = () => {
+	const URILogo = join(__dirname, 'icons', 'logo_audiophone_65x65.png');	
 	const win = new BrowserWindow({
+		icon: nativeImage.createFromPath(URILogo),
 		width: 800,
 		height: 600,
 		webPreferences: {
@@ -14,7 +16,7 @@ const createWindow = () => {
 	});
 
 	win.maximize();
-	// win.setMenu(null); // establecer en production
+	win.setMenu(null); // establecer en production
 	win.loadFile(join(__dirname, 'rendered', 'index.html'));
 };
 
