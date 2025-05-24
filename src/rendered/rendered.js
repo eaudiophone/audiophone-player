@@ -170,8 +170,8 @@
     
             // filtramos la lista
             // devuelve las coincidencias
-            playList = state.playlist.filter(list => {
-                const position = (list.name.toLowerCase()).search(value);
+            playList = state.playlist.filter(track => {
+                const position = (track.name.toLowerCase()).search(value);
                 return (position !== -1); 
             });
         }
