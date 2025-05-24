@@ -115,8 +115,10 @@
      * Manejador del boton de carga de archivos
      */
     async function handleLoadButton() {
-        /** @type {Array<Track>} */
+        /** @type {Array<Track> | undefined} */
         const playlist = await window.API.openFileDialog();
+
+        if (!playlist) return;
 
         /** @type {State} */
         const state = STORE.getState();
