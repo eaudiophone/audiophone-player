@@ -24,4 +24,11 @@ seleccionada.
 ```
 
 Se recomienda leer la documentacion de electron forge para especificar
-los paquetes para produccion del sistema operativo.
+los paquetes para produccion del sistema operativo. <br /> 
+
+Se utiliza innosetup para crear los instaladores en windows y appimagetool para generar los
+AppImage para los dispositivos en mac y linux
+
+### informacion adicional
+[appimagetool](https://www.youtube.com/watch?v=Wy63jwjpNg4)
+[innosetup](https://jrsoftware.org/isinfo.php)
