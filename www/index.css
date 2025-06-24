@@ -252,7 +252,8 @@ footer #indicator-volume,
     background: var(--foreground);
 }
 
-footer #indicator-volume::-webkit-slider-thumb {
+footer #indicator-volume::-webkit-slider-thumb,
+footer #indicator-volume::-moz-range-thumb {
     -webkit-appearance: none;
     appearance: none; 
     height: 15px;
@@ -271,7 +272,8 @@ footer #indicator-volume::-webkit-slider-thumb {
     background: var(--borders);
 }
 
-.player-container #progress::-webkit-slider-thumb {
+.player-container #progress::-webkit-slider-thumb,
+.player-container #progress::-moz-range-thumb {
     -webkit-appearance: none;
     appearance: none; 
     height: 0;
@@ -281,6 +283,7 @@ footer #indicator-volume::-webkit-slider-thumb {
     border: none;
     transition: .2s ease-in-out;
 }
+
 
 /*.player-container #progress::-webkit-slider-thumb:hover {
     box-shadow: 0 0 0 10px rgba(255,85,0, .1);

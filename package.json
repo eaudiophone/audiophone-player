@@ -1,52 +1,15 @@
 {
     "name": "audiophone-player",
     "version": "1.0.0",
-    "description": "My Electron application description",
-    "main": "src/index.js",
+    "description": "PWA Version for audiophone player",
     "scripts": {
-        "electron-app": "electron .",
-        "make": "electron-forge make",
-        "package": "electron-forge package",
-        "start": "electron-forge start"
+        "start": "node esbuild.config.mjs"
     },
     "author": "",
     "license": "MIT",
-    "config": {
-        "forge": {
-            "packagerConfig": {
-                "icon": "src/icons/logo_audiophone_65x65.ico"
-            },
-            "makers": [
-                {
-                    "config": {},
-                    "name": "@electron-forge/maker-deb"
-                },
-                {
-                    "config": {},
-                    "name": "@electron-forge/maker-rpm"
-                },
-                {
-                    "config": {
-                        "name": "audiophone-player"
-                    },
-                    "name": "@electron-forge/maker-squirrel"
-                },
-                {
-                    "config": [
-                        "darwin"
-                    ],
-                    "name": "@electron-forge/maker-zip"
-                }
-            ]
-        }
-    },
     "devDependencies": {
-        "@electron-forge/cli": "6.0.0-beta.44",
-        "@electron-forge/maker-deb": "6.0.0-beta.44",
-        "@electron-forge/maker-rpm": "6.0.0-beta.44",
-        "@electron-forge/maker-squirrel": "6.0.0-beta.44",
-        "@electron-forge/maker-zip": "6.0.0-beta.44",
-        "electron": "10.4.7"
+        "esbuild": "0.25.5"
     },
-    "dependencies": {}
+    "dependencies": {},
+    "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
