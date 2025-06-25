@@ -3,7 +3,7 @@
     "short_name": "EA Player",
     "description": "Reproductor personal de música",
     "display": "standalone",
-    "start_url": "/index.html",
+    "start_url": "/audiophone-player/index.html",
     "icons": [
         {
             "src": "icons/logo_audiophone_512x512.png",
