@@ -6,13 +6,27 @@
     "start_url": "/index.html",
     "icons": [
         {
-            "src": "icons/logo_audiophone_512x362.png",
+            "src": "icons/logo_audiophone_512x512.png",
             "type": "image/png",
-            "sizes": "512x362"
+            "sizes": "512x512"
+        },
+        {
+            "src": "icons/logo_audiophone_144x144.png",
+            "type": "image/png",
+            "sizes": "144x144"
         }
     ],
     "orientation": "portrait",
     "background_color": "#000",
     "theme_color": "#292828",
-    "lang": "en"
+    "lang": "en",
+    "screenshots": [
+        {
+            "src": "screenshot/app_desktop.png",
+            "sizes": "1368x768",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Application"
+        }
+    ]
 }

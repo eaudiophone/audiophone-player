@@ -1,3 +1,6 @@
+// registro de SW.
+if (navigator.serviceWorker) navigator.serviceWorker.register('./sw.js');
+
 interface Track {
     name: string;
     index: number;

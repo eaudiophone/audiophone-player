@@ -1,13 +1,16 @@
 import * as esbuild from 'esbuild';
 
 esbuild.context({
-    entryPoints: ['./src/index.ts'],
+    entryPoints: [
+        './src/index.ts',
+        './src/sw.ts'
+    ],
     outdir: './www',
     bundle: true,
     write: true,
-    minifyWhitespace: true,
-    minifySyntax: true,
-    minifyIdentifiers: true,
+    minifyWhitespace: false,
+    minifySyntax: false,
+    minifyIdentifiers: false,
     sourcemap: 'linked',
     tsconfig: './tsconfig.json',
     target: ['chrome58', 'firefox57']
