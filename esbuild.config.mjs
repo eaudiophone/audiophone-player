@@ -5,7 +5,7 @@ esbuild.context({
         './src/index.ts',
         './src/sw.ts'
     ],
-    outdir: './www',
+    outdir: './docs',
     bundle: true,
     write: true,
     minifyWhitespace: true,
