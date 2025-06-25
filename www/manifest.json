@@ -1,0 +1,18 @@
+{
+    "name": "Audiophone Player",
+    "short_name": "EA Player",
+    "description": "Reproductor personal de música",
+    "display": "standalone",
+    "start_url": "/index.html",
+    "icons": [
+        {
+            "src": "icons/logo_audiophone_512x362.png",
+            "type": "image/png",
+            "sizes": "512x362"
+        }
+    ],
+    "orientation": "portrait",
+    "background_color": "#000",
+    "theme_color": "#292828",
+    "lang": "en"
+}

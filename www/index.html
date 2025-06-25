@@ -8,7 +8,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 		<title>Audiophone Player</title>
-		<link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="index.css" />
+		<link rel="manifest" href="manifest.json" />
 	</head>
 	<body>
 		<header>
@@ -42,7 +43,7 @@
 			<div id="playlist">
 				<div>
 					<div class="text-center">
-						<input type="file" id="upload-input" name="files" multiple hidden>
+						<input accept="audio/*" type="file" id="upload-input" name="files" multiple hidden>
 						<button type="button" class="load-button-playlist" id="load-playlist">
 							Cargar archivos
 						</button>

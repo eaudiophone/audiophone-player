@@ -252,9 +252,20 @@ footer #indicator-volume,
     background: var(--foreground);
 }
 
-footer #indicator-volume::-webkit-slider-thumb,
-footer #indicator-volume::-moz-range-thumb {
+footer #indicator-volume::-webkit-slider-thumb {
     -webkit-appearance: none;
+    appearance: none; 
+    height: 15px;
+    width: 15px;
+    background-color: var(--foreground);
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+}
+
+
+footer #indicator-volume::-moz-range-thumb {
+    -moz-appearance: none;
     appearance: none; 
     height: 15px;
     width: 15px;
@@ -272,9 +283,19 @@ footer #indicator-volume::-moz-range-thumb {
     background: var(--borders);
 }
 
-.player-container #progress::-webkit-slider-thumb,
-.player-container #progress::-moz-range-thumb {
+.player-container #progress::-webkit-slider-thumb {
     -webkit-appearance: none;
+    appearance: none; 
+    height: 0;
+    width: 0;
+    background-color: #f50;
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+}
+
+.player-container #progress::-moz-range-thumb {
+    -moz-appearance: none;
     appearance: none; 
     height: 0;
     width: 0;
