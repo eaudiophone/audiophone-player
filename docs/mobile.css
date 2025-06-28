@@ -138,6 +138,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin: 5px 0 2.5rem 0;
+    font-size: 12px;
 }
 
 #mobile #controls .play-pause {
