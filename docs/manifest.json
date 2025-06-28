@@ -27,6 +27,13 @@
             "type": "image/png",
             "form_factor": "wide",
             "label": "Application"
+        },
+        {
+            "src": "screenshot/app_mobile.png",
+            "sizes": "375x812",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Application"
         }
     ]
 }

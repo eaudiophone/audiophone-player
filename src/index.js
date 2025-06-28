@@ -162,7 +162,7 @@ function searchTrack(event) {
         playList = JSON
             .parse(window.sessionStorage.getItem('playlist'))
             .map(track => {
-                if (track.index === state.selectedTrack.index) {
+                if (state.selectedTrack && track.index === state.selectedTrack.index) {
                     return {...track, selected: true};
                 }
 

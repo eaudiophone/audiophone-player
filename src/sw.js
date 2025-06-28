@@ -1,8 +1,8 @@
 const APP_SHELL = {
-    CACHE_NAME: 'cache-v.0.2',
-    CACHE_STATIC: 'static-v.0.2',
-    CACHE_DYNAMIC: 'dynamic-v.0.2',
-    CACHE_INMUTABLE: 'inmutable-v.0.2',
+    CACHE_NAME: 'cache-v.0.3',
+    CACHE_STATIC: 'static-v.0.3',
+    CACHE_DYNAMIC: 'dynamic-v.0.3',
+    CACHE_INMUTABLE: 'inmutable-v.0.3',
 };
 
 /** estructura de la pagina 404 */
@@ -69,7 +69,8 @@ self.addEventListener('install', event => {
             const files = [
                 './', 
                 './index.html', 
-                './index.css', 
+                './index.css',
+                './mobile.css', 
                 './index.js',
                 './img/note-double.svg',
                 './img/user.svg',

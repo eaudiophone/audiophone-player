@@ -1,3 +1,5 @@
+/** css para dispositivos mobiles */
+
 @font-face {
     font-family: 'Roboto';
     src: url(fonts/Roboto-Regular.ttf);
@@ -33,6 +35,15 @@ body {
     font-family: 'Roboto';
     margin: 0 15px;
     overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.underline {
+    text-decoration: underline;
 }
 
 
@@ -42,4 +53,149 @@ body {
 
 #mobile {
     display: block;
+    min-height: inherit;
+}
+
+#mobile .layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: inherit;
+    row-gap: 34px;
+}
+
+#mobile .icons {
+    width: 2rem;
+}
+
+#mobile header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--borders);
+}
+
+#mobile header .header-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#mobile header .header-title h2 {
+    font-size: 1.2rem;
+    text-transform: capitalize;
+    margin: 0 14px;
+}
+
+#mobile header .form-search-top {
+    display: none;
+}
+
+#mobile .main-img {
+    width: 100%;
+}
+
+/* reproductor */
+#mobile #player #name-track {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#mobile #player #name-track span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#mobile .player-container #progress {
+    width: 100%;
+    height: 3px;
+    background: var(--borders);
+}
+
+#mobile .player-container #progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none; 
+    height: 0;
+    width: 0;
+    background-color: #f50;
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+}
+
+#mobile .player-container #progress::-moz-range-thumb {
+    -moz-appearance: none;
+    appearance: none; 
+    height: 0;
+    width: 0;
+    background-color: #f50;
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+}
+
+#mobile .player-container footer > #timer {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0 2.5rem 0;
+}
+
+#mobile #controls .play-pause {
+    height: 32px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+#mobile #controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mobile #volume {
+    display: none;
+}
+
+/** playlist */
+#mobile #playlist button {
+    padding: 12px 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 9999px;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+#mobile #playlist button:hover {
+    background-color: lightgray;
+}
+
+#mobile #playlist .item {
+    border-bottom: 1px solid var(--borders);
+    padding: 10px 7px;
+    cursor: pointer;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+}
+
+#mobile #playlist .item:first-child {
+    margin-top: 20px;
+}
+
+#mobile #playlist .item:last-child {
+    border: none;
+}
+
+#mobile #playlist .item img {
+    height: 24px;
+    margin-right: 10px;
+}
+
+#mobile #playlist .selected {
+    background-color: var(--borders);
+}
+
+#mobile #playlist .item:hover {
+    background-color: rgba(136, 136, 136, .2);
 }

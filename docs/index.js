@@ -109,7 +109,7 @@
         let playList = [];
         if (value.length === 0) {
           playList = JSON.parse(window.sessionStorage.getItem("playlist")).map((track) => {
-            if (track.index === state.selectedTrack.index) {
+            if (state.selectedTrack && track.index === state.selectedTrack.index) {
               return __spreadProps(__spreadValues({}, track), { selected: true });
             }
             return track;
