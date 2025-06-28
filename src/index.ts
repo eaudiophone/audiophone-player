@@ -223,7 +223,7 @@ function loadTrack(index: number) {
 async function handleLoadButton() {
     const playlist = await getFiles();
     
-    if (!playlist) return;
+    if (playlist.length === 0) return;
 
     const state: State = STORE.getState();
 
