@@ -23,8 +23,8 @@ esbuild.context({
         // inicia el servidor de desarrollo
         ctx.serve({
             port: 3000,
-            servedir: 'www',
-            fallback: './www/index.html'
+            servedir: 'docs',
+            fallback: './docs/index.html'
         })
             .then(server => console.log('Servidor corriendo en el ' + server.port))
             .catch(console.error);
