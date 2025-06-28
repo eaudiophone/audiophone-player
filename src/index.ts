@@ -70,7 +70,13 @@ function initState(set: any) {
 
                     // pasamos a la siguiente valor de la lista de reproduccion 
                     // si no es el ultima pista
-                    if (state.selectedTrack && state.selectedTrack.index !== (state.playlist.length - 1)) UI.nextTrack.click();
+                    if (state.selectedTrack && state.selectedTrack.index !== (state.playlist.length - 1)) 
+                        UI.nextTrack.click();
+                },
+                onseek: () => { 
+                    // evento que captura los eventos de los saltos y actualiza
+                    // el frame
+                    requestAnimationFrame(updateTimer);
                 }
             });
 
@@ -93,8 +99,7 @@ function formatTime(seconds: number) {
 * funcion que controla la actualizacion del tiempo
 */
 function updateTimer() {
-    /** @type {State} */
-    const { audio } = STORE.getState();
+    const {audio}: State = STORE.getState();
     const seek = audio.seek() || 0;
 
     if (UI.timerTrack) UI.timerTrack.innerHTML = formatTime(Math.round(seek));
@@ -103,7 +108,7 @@ function updateTimer() {
 
     if (UI.progress) {
         // establecemos los estilos de la linea
-        (UI.progress as HTMLInputElement).value = width.toString();
+        UI.progress.value = width.toString();
         UI.progress.style.background = (`linear-gradient(to right, var(--color-indicators) ${width}%, var(--borders) ${width}%)`);
     }
 
@@ -171,7 +176,7 @@ function skipTo(direction: 'next' | 'prev' = 'next') {
  * @param {MouseEvent} event 
  */
 function jumpTo(event: MouseEvent) {
-    const { playlist, selectedTrack, audio }: State = STORE.getState();
+    const {playlist, selectedTrack, audio}: State = STORE.getState();
 
     if (playlist.length === 0 || !selectedTrack) return;
 
