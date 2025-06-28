@@ -3,7 +3,7 @@
     "short_name": "EA Player",
     "description": "Reproductor personal de música",
     "display": "standalone",
-    "start_url": "/audiophone-player/index.html",
+    "start_url": "/audiophone-player/",
     "icons": [
         {
             "src": "icons/logo_audiophone_512x512.png",
@@ -26,14 +26,14 @@
             "sizes": "1368x768",
             "type": "image/png",
             "form_factor": "wide",
-            "label": "Application"
+            "label": "Reproductor de musica en el escritorio"
         },
         {
             "src": "screenshot/app_mobile.png",
             "sizes": "375x812",
             "type": "image/png",
             "form_factor": "narrow",
-            "label": "Application"
+            "label": "Reproductor de musica en el movil"
         }
     ]
 }

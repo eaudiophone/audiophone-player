@@ -1,10 +1,10 @@
 (() => {
   // src/sw.js
   var APP_SHELL = {
-    CACHE_NAME: "cache-v.0.3",
-    CACHE_STATIC: "static-v.0.3",
-    CACHE_DYNAMIC: "dynamic-v.0.3",
-    CACHE_INMUTABLE: "inmutable-v.0.3"
+    CACHE_NAME: "cache-v.0.4",
+    CACHE_STATIC: "static-v.0.4",
+    CACHE_DYNAMIC: "dynamic-v.0.4",
+    CACHE_INMUTABLE: "inmutable-v.0.4"
   };
   var offlinePage = `
 <!DOCTYPE html>
