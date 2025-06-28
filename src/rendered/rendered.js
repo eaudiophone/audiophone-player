@@ -72,6 +72,10 @@
                         // pasamos a la siguiente valor de la lista de reproduccion 
                         // si no es el ultima pista
                         if (state.selectedTrack.index !== (state.playlist.length - 1)) UI.nextTrack.click();
+                    },
+                    onseek: () => {
+                        // activa el evento y actualiza el frame cuando haya un salto
+                        requestAnimationFrame(updateTimer);
                     }
                 }); 
     
