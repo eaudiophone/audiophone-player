@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url(fonts/Roboto-Regular.ttf);
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(fonts/Roboto-Bold.ttf);
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(fonts/Roboto-Italic.ttf);
+    font-weight: normal;
+    font-style: italic;
+}
+
+:root {
+    --background: #000;
+    --foreground: #fff;
+    --borders: #3c3c3c;
+    --background-form: rgba(136, 136, 136, .5);
+    --color-indicators: #f50;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Roboto';
+    margin: 0 15px;
+    overflow-x: hidden;
+}
+
+
+#desktop {
+    display: none;
+}
+
+#mobile {
+    display: block;
+}

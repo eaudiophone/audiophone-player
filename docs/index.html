@@ -8,77 +8,85 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 		<title>Audiophone Player</title>
-		<link rel="stylesheet" href="index.css" />
+		<link rel="stylesheet" href="index.css" media="screnn and (min-width: 769px)" />
+		<link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
 		<link rel="manifest" href="manifest.json" />
 		<link rel="shortcut icon" href="icons/logo_audiophone_65x65.ico" type="image/x-icon">
 	</head>
 	<body>
-		<header>
-			<div class="header-title">
-				<img src="img/note-double.svg" alt="music-note" class="icons" />
-				<h2 class="subtitle">Music</h2>
-			</div>
-			<div class="form-search-top">
-				<input 
-					id="search"
-					maxlength="255"  
-					type="text" 
-					name="s" 
-					placeholder="Buscar Canciones"	
-				/>
-			</div>
-			<div class="form-avatar">
-				<img src="img/user.svg" alt="user.svg" class="icons" />
-			</div>
-		</header>
-		<main>
-			<aside id="menu">
-				<p>
-					<img src="img/home.svg" alt="home" />
-					<span>Principal</span>
-				</p>	
-			</aside>
-			<div class="main-cont">
-				<img src="img/music-note.svg" alt="play" class="main-img" />
-			</div>
-			<div id="playlist">
-				<div>
-					<div class="text-center">
-						<input accept="audio/*" type="file" id="upload-input" name="files" multiple hidden>
-						<button type="button" class="load-button-playlist" id="load-playlist">
-							Cargar archivos
-						</button>
-					</div>
-					<h3 class="text-center underline">Lista de reproducción:</h3>	
-					<div id="data">
-						<p class="text-center">No se cargaron archivos</p>
-					</div>
+		<!-- desktop devices -->
+		<div id="desktop">
+			<header>
+				<div class="header-title">
+					<img src="img/note-double.svg" alt="music-note" class="icons" />
+					<h2 class="subtitle">Music</h2>
 				</div>
-			</div>
-		</main>
-		<!-- reproductor -->
-		<div class="player-container">
-			<input type="range" readonly id="progress" max="100" min="0" value="0" />
-			<footer id="player">
-				<div>
-					<div id="controls">
-						<img class="icons" id="prev" src="img/prev.svg" alt="prev" />
-						<img value="play" class="play-pause" id="play-pause" src="img/play.svg" alt="control" />
-						<img class="icons" id="next" src="img/next.svg" alt="next" style="height: 21px;" />
-					</div>
-					<div id="timer">
-						<span id="timer">0:00</span> / <span id="duration">0:00</span>
+				<div class="form-search-top">
+					<input 
+						id="search"
+						maxlength="255"  
+						type="text" 
+						name="s" 
+						placeholder="Buscar Canciones"	
+					/>
+				</div>
+				<div class="form-avatar">
+					<img src="img/user.svg" alt="user.svg" class="icons" />
+				</div>
+			</header>
+			<main>
+				<aside id="menu">
+					<p>
+						<img src="img/home.svg" alt="home" />
+						<span>Principal</span>
+					</p>	
+				</aside>
+				<div class="main-cont">
+					<img src="img/music-note.svg" alt="play" class="main-img" />
+				</div>
+				<div id="playlist">
+					<div>
+						<div class="text-center">
+							<input accept="audio/*" type="file" id="upload-input" name="files" multiple hidden>
+							<button type="button" class="load-button-playlist" id="load-playlist">
+								Cargar archivos
+							</button>
+						</div>
+						<h3 class="text-center underline">Lista de reproducción:</h3>	
+						<div id="data">
+							<p class="text-center">No se cargaron archivos</p>
+						</div>
 					</div>
 				</div>
-				<div id="name-track">
-					<span id="title-track">Title playlist</span>
-				</div>
-				<div id="volume">
-					<input type="range" id="indicator-volume" max="100" min="0" value="100" />
-					<img class="icons" src="img/sound-loud.svg" alt="sound" style="height: 24px;" />
-				</div>
-			</footer>
+			</main>
+			<!-- reproductor -->
+			<div class="player-container">
+				<input type="range" readonly id="progress" max="100" min="0" value="0" />
+				<footer id="player">
+					<div>
+						<div id="controls">
+							<img class="icons" id="prev" src="img/prev.svg" alt="prev" />
+							<img value="play" class="play-pause" id="play-pause" src="img/play.svg" alt="control" />
+							<img class="icons" id="next" src="img/next.svg" alt="next" style="height: 21px;" />
+						</div>
+						<div id="timer">
+							<span id="timer">0:00</span> / <span id="duration">0:00</span>
+						</div>
+					</div>
+					<div id="name-track">
+						<span id="title-track">Title playlist</span>
+					</div>
+					<div id="volume">
+						<input type="range" id="indicator-volume" max="100" min="0" value="100" />
+						<img class="icons" src="img/sound-loud.svg" alt="sound" style="height: 24px;" />
+					</div>
+				</footer>
+			</div>
 		</div>
+
+		<!-- mobile -->
+		<div id="mobile"></div>
+		
 		<script src="js/howler.min.js"></script>
 		<script src="js/zustand.js"></script>
 		<script src="index.js"></script>
