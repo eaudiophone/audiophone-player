@@ -1,4 +1,12 @@
-"use strict";(()=>{var s={CACHE_NAME:"cache-v.0.2",CACHE_STATIC:"static-v.0.2",CACHE_DYNAMIC:"dynamic-v.0.2",CACHE_INMUTABLE:"inmutable-v.0.2"},r=`
+(() => {
+  // src/sw.js
+  var APP_SHELL = {
+    CACHE_NAME: "cache-v.0.2",
+    CACHE_STATIC: "static-v.0.2",
+    CACHE_DYNAMIC: "dynamic-v.0.2",
+    CACHE_INMUTABLE: "inmutable-v.0.2"
+  };
+  var offlinePage = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,5 +58,58 @@
     </div>
 </body>
 </html>     
-`;self.addEventListener("install",n=>{console.info("installation SW");let i=caches.open(s.CACHE_STATIC).then(e=>{let t=["./","./index.html","./index.css","./index.js","./img/note-double.svg","./img/user.svg","./img/home.svg","./img/music-note.svg","./img/play.svg","./img/prev.svg","./img/next.svg","./img/sound-loud.svg","./img/pause.svg","./manifest.json"];return e.addAll(t)}),o=caches.open(s.CACHE_INMUTABLE).then(e=>{let t=["./js/howler.min.js","./js/zustand.js","./fonts/Roboto-Bold.ttf","./fonts/Roboto-Regular.ttf"];return e.addAll(t)});n.waitUntil(Promise.all([i,o]))});self.addEventListener("fetch",n=>{console.info("cache with network fallback");let i=caches.match(n.request).then(o=>o&&o.ok?o:(console.info("go to web"),fetch(n.request).then(e=>(caches.open(s.CACHE_DYNAMIC).then(t=>{t.put(n.request,e)}),e.clone())).catch(()=>new Response(r,{headers:{"Content-Type":"text/html"}}))));n.respondWith(i)});})();
+`;
+  self.addEventListener("install", (event) => {
+    console.info("installation SW");
+    const cacheStaticPromise = caches.open(APP_SHELL.CACHE_STATIC).then((cache) => {
+      const files = [
+        "./",
+        "./index.html",
+        "./index.css",
+        "./index.js",
+        "./img/note-double.svg",
+        "./img/user.svg",
+        "./img/home.svg",
+        "./img/music-note.svg",
+        "./img/play.svg",
+        "./img/prev.svg",
+        "./img/next.svg",
+        "./img/sound-loud.svg",
+        "./img/pause.svg",
+        "./manifest.json"
+      ];
+      return cache.addAll(files);
+    });
+    const cacheInmutablePromise = caches.open(APP_SHELL.CACHE_INMUTABLE).then((cache) => {
+      const files = [
+        "./js/howler.min.js",
+        "./js/zustand.js",
+        "./fonts/Roboto-Bold.ttf",
+        "./fonts/Roboto-Regular.ttf"
+      ];
+      return cache.addAll(files);
+    });
+    event.waitUntil(Promise.all([cacheStaticPromise, cacheInmutablePromise]));
+  });
+  self.addEventListener("fetch", (event) => {
+    console.info("cache with network fallback");
+    const cacheNetwork = caches.match(event.request).then((cacheResponse) => {
+      if (cacheResponse && cacheResponse.ok) return cacheResponse;
+      console.info("go to web");
+      return fetch(event.request).then((webResponse) => {
+        caches.open(APP_SHELL.CACHE_DYNAMIC).then((cache) => {
+          cache.put(event.request, webResponse);
+        });
+        return webResponse.clone();
+      }).catch(() => {
+        const offlineResponse = new Response(
+          offlinePage,
+          { headers: { "Content-Type": "text/html" } }
+        );
+        return offlineResponse;
+      });
+    });
+    event.respondWith(cacheNetwork);
+  });
+})();
 //# sourceMappingURL=sw.js.map

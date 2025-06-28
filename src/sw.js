@@ -61,7 +61,7 @@ const offlinePage = (`
 `);
 
 // SW
-self.addEventListener('install', (event: any) => {
+self.addEventListener('install', event => {
     console.info('installation SW');
 
     const cacheStaticPromise = caches.open(APP_SHELL.CACHE_STATIC)
@@ -101,7 +101,7 @@ self.addEventListener('install', (event: any) => {
     event.waitUntil(Promise.all([cacheStaticPromise, cacheInmutablePromise]));
 });
 
-self.addEventListener('fetch', (event: any) => {
+self.addEventListener('fetch', event => {
     console.info('cache with network fallback');
    
     const cacheNetwork = caches.match(event.request)
