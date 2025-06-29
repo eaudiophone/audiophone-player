@@ -14,29 +14,30 @@ if (navigator.serviceWorker) navigator.serviceWorker.register('./sw.js');
 /**
  * @typedef State
  * @type {Object}
- * @property {Array<Track>} playlist
+ * @property {Track[]} playlist
  * @property {Track | null} selectedTrack
- * @property {(playlist: Array<Track>) => void} setPlaylist
+ * @property {(playlist: Track[]) => void} setPlaylist
  * @property {(track: Track) => void} setSelectedTrack
  * @property {Howl | null} audio  instancia de Howl.js
  * @property {(data: {format: string, filePath: string}) => void} setAudio
  */
 
-const screen = (window.matchMedia('screen and (max-width: 768px)')).matches ? '#mobile' : '#desktop';
+const SCREEN = (window.matchMedia('screen and (max-width: 768px)')).matches ? 
+    '#mobile' : '#desktop';
 const UI = {
-    uploadButton: document.querySelector(screen + ' ' + 'button#load-playlist'),
-    inputFile: document.querySelector(screen + ' ' + '#upload-input'),
-    playListData: document.querySelector(screen + ' ' + '#playlist #data'),
-    inputSearch: document.querySelector(screen + ' ' + '#search'),
-    player: document.querySelector(screen + ' ' + 'footer#player'),
-    volume: document.querySelector(screen + ' ' + 'footer #indicator-volume'), 
-    buttonPlay: document.querySelector(screen + ' ' + '#play-pause'),   
-    durationTrack: document.querySelector(screen + ' ' + 'span#duration'),
-    timerTrack: document.querySelector(screen + ' ' + 'span#timer'),
-    progress: document.querySelector(screen + ' ' + '#progress'),
-    nextTrack: document.querySelector(screen + ' ' + '#next'),
-    prevTrack: document.querySelector(screen + ' ' + '#prev'),
-    titleTrack: document.querySelector(screen + ' ' +'#title-track'),
+    uploadButton: document.querySelector(SCREEN + ' ' + 'button#load-playlist'),
+    inputFile: document.querySelector(SCREEN + ' ' + '#upload-input'),
+    playListData: document.querySelector(SCREEN + ' ' + '#playlist #data'),
+    inputSearch: document.querySelector(SCREEN + ' ' + '#search'),
+    player: document.querySelector(SCREEN + ' ' + 'footer#player'),
+    volume: document.querySelector(SCREEN + ' ' + 'footer #indicator-volume'), 
+    buttonPlay: document.querySelector(SCREEN + ' ' + '#play-pause'),   
+    durationTrack: document.querySelector(SCREEN + ' ' + 'span#duration'),
+    timerTrack: document.querySelector(SCREEN + ' ' + 'span#timer'),
+    progress: document.querySelector(SCREEN + ' ' + '#progress'),
+    nextTrack: document.querySelector(SCREEN + ' ' + '#next'),
+    prevTrack: document.querySelector(SCREEN + ' ' + '#prev'),
+    titleTrack: document.querySelector(SCREEN + ' ' +'#title-track'),
 };
 
 /** inicializa el estado de la aplicacion */    
@@ -53,11 +54,11 @@ function initState(set) {
             if (state.audio) state.audio.unload(); // desmonta el sonido si existe una instancia
             
             // crea una referencia local que apunta al mismo objeto de sonido
-            // para acceder al objeto sound dentro del objeto de config de howler
+            // dentro de la configuración
             let sound = state.audio = new Howl({
                 src: [filePath],
-                html5: true, // html5 streaming, ideal para grandes buffer de datos
-                format: [format], 
+                html5: true, // html5 streaming, ideal para grandes buffers de datos
+                format: [format], // formato del archivo (requerido en Web PWA)
                 onload: () => {
                     if (UI.buttonPlay.getAttribute('value') === 'play') UI.buttonPlay.click();
                 },
@@ -77,7 +78,8 @@ function initState(set) {
 
                     // pasamos a la siguiente valor de la lista de reproduccion 
                     // si no es el ultima pista
-                    if (state.selectedTrack && state.selectedTrack.index !== (state.playlist.length - 1)) UI.nextTrack.click();
+                    if (state.selectedTrack && state.selectedTrack.index !== (state.playlist.length - 1)) 
+                        UI.nextTrack.click();
                 },
                 onseek: () => {
                     // activa el evento y actualiza el frame cuando haya un salto
@@ -95,7 +97,6 @@ function initState(set) {
 /**
  * carga la pista en el reproductor
  * @param {number} index indice de la pista
- * @returns 
  */
 function loadTrack(index) {
     /** @type {State} */
@@ -118,6 +119,7 @@ function loadTrack(index) {
 
     // procedemos a pasar los datos al componente del reproductor
     const track = newPlaylist.find(track => track.index === index) || null;
+    
     state.setSelectedTrack(track);
 }
 
@@ -125,7 +127,6 @@ function loadTrack(index) {
  * Manejador del boton de carga de archivos
  */
 async function handleLoadButton() {
-    /** @type {Array<Track>} */
     const playlist = await getFiles();
 
     if (playlist.length === 0) return;

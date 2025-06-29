@@ -8,9 +8,9 @@ esbuild.context({
     outdir: './docs',
     bundle: true,
     write: true,
-    minifyWhitespace: false,
-    minifySyntax: false,
-    minifyIdentifiers: false,
+    minifyWhitespace: true,
+    minifySyntax: true,
+    minifyIdentifiers: true,
     sourcemap: 'linked',
     // tsconfig: './tsconfig.json',
     target: ['chrome58', 'firefox57']
