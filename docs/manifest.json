@@ -1,0 +1,39 @@
+{
+    "name": "Audiophone Player",
+    "short_name": "EA Player",
+    "description": "Reproductor personal de música",
+    "display": "standalone",
+    "start_url": "/audiophone-player/",
+    "icons": [
+        {
+            "src": "icons/android-chrome-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "icons/android-chrome-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ],
+    "orientation": "portrait",
+    "background_color": "#000",
+    "theme_color": "#292828",
+    "lang": "en",
+    "screenshots": [
+        {
+            "src": "screenshot/app_desktop.png",
+            "sizes": "1368x768",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Reproductor de musica en el escritorio"
+        },
+        {
+            "src": "screenshot/app_mobile.png",
+            "sizes": "375x812",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Reproductor de musica en el movil"
+        }
+    ]
+}

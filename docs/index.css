@@ -35,36 +35,46 @@ body {
     overflow-x: hidden;
 }
 
-header {
+
+#desktop {
+    display: block;
+}
+
+#mobile {
+    display: none;
+}
+
+#desktop header {
     display: grid;
     grid-template-columns: 20% 60% 20%;
     border-bottom: 1px solid var(--borders);
 }
 
-header, main {
+#desktop header, main {
     margin: 0 24px;
 }
 
-.subtitle {
+
+#desktop .subtitle {
     font-size: 1.2rem;
     text-transform: capitalize;
 }
 
-.text-center {
+#desktop .text-center {
     text-align: center;
 }
 
-.underline {
+#desktop .underline {
     text-decoration: underline;
 }
 
-.form-search-top {
+#desktop .form-search-top {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.form-search-top input {
+#desktop .form-search-top input {
     color: var(--foreground);
     background-color: rgba(136, 136, 136, .5);
     outline: none;
@@ -75,63 +85,63 @@ header, main {
     font-size: 0.9rem;
 }
 
-.form-avatar, .header-title {
+#desktop .form-avatar, .header-title {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.header-title {
+#desktop .header-title {
     justify-content: start;
 }
 
-.header-title img {
+#desktop .header-title img {
     margin-right: 15px;
 }
 
-.icons {
+#desktop .icons {
     width: 2rem;
 }
 
-main {
+#desktop main {
     display: grid;
     grid-template-columns: 20% 50% 30%;
     height: calc(100vh - 68px - 54px);
 }
 
-aside {
+#desktop aside {
     border-right: 1px solid var(--borders);
 }
 
-aside img {
+#desktop aside img {
     width: 1rem;
     margin-right: 12px;
 }
 
-aside p {
+#desktop aside p {
     margin: 0;
     padding: 12px 15px;
     font-size: 1rem;
     margin: 10px;
 }
 
-aside p:first-child {
+#desktop side p:first-child {
     background-color: rgba(136, 136, 136, .4);
     border-radius: 5px;
     margin: 10px;
 }
 
-#playlist {
+#desktop #playlist {
     height: inherit;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-#playlist > div {
+#desktop #playlist > div {
     margin-top: 15px;
 }
 
-#playlist button {
+#desktop #playlist button {
     padding: 12px 18px;
     border: none;
     cursor: pointer;
@@ -140,11 +150,11 @@ aside p:first-child {
     font-size: 0.9rem;
 }
 
-#playlist button:hover {
+#desktop #playlist button:hover {
     background-color: lightgray;
 }
 
-#playlist .item {
+#desktop #playlist .item {
     border-bottom: 1px solid var(--borders);
     padding: 10px 7px;
     cursor: pointer;
@@ -153,44 +163,44 @@ aside p:first-child {
     align-items: center;
 }
 
-#playlist .item:first-child {
+#desktop #playlist .item:first-child {
     margin-top: 20px;
 }
 
-#playlist .item:last-child {
+#desktop #playlist .item:last-child {
     border: none;
 }
 
-#playlist .item img {
+#desktop #playlist .item img {
     height: 24px;
     margin-right: 10px;
 }
 
-#playlist .selected {
+#desktop #playlist .selected {
     background-color: var(--borders);
 }
 
-#playlist .item:hover {
+#desktop #playlist .item:hover {
     background-color: rgba(136, 136, 136, .2);
 }
 
 
-.main-img {
+#desktop .main-img {
     max-width: 65%;
 }
 
-.main-cont {
+#desktop .main-cont {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.player-container {
+#desktop .player-container {
     position: sticky;
     bottom: 0;
 }
 
-#player {
+#desktop #player {
     background-color: #292828;
     color: white;
     display: grid;
@@ -198,50 +208,50 @@ aside p:first-child {
     padding: 17px 24px;
 }
 
-#player > div {
+#desktop #player > div {
     display: flex;
     align-items: center;
 }
 
-#player #controls {
+#desktop #player #controls {
     display: flex;
     justify-content: start;
     align-items: center;
 }
 
-#player #controls img {
+#desktop #player #controls img {
     height: 24px;
     cursor: pointer;
 }
 
-#player #controls .play-pause {
+#desktop #player #controls .play-pause {
     height: 32px;
     margin-left: 1rem;
     margin-right: 1rem;
 }
 
-#player #timer {
+#desktop #player #timer {
     margin-left: 24px;
     font-size: 0.8rem;
 }
 
-#player #title-track {
+#desktop #player #title-track {
     font-size: 1.2rem;
     font-weight: bold;
 }
 
-#player #volume {
+#desktop #player #volume {
     display: flex;
     justify-content: flex-end;
 }
 
-#player #volume input[type="range"] {
+#desktop #player #volume input[type="range"] {
     margin-right: 15px;
 }
 
 /** volumen indicator */
-footer #indicator-volume,
-.player-container #progress {
+#desktop footer #indicator-volume,
+#desktop .player-container #progress {
     -webkit-appearance: none;
     appearance: none;
     width: 30%;
@@ -252,7 +262,7 @@ footer #indicator-volume,
     background: var(--foreground);
 }
 
-footer #indicator-volume::-webkit-slider-thumb {
+#desktop footer #indicator-volume::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none; 
     height: 15px;
@@ -263,7 +273,19 @@ footer #indicator-volume::-webkit-slider-thumb {
     transition: .2s ease-in-out;
 }
 
-.player-container #progress {
+
+#desktop footer #indicator-volume::-moz-range-thumb {
+    -moz-appearance: none;
+    appearance: none; 
+    height: 15px;
+    width: 15px;
+    background-color: var(--foreground);
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+}
+
+#desktop .player-container #progress {
     width: 100%;
     position: absolute;
     top: -1px;
@@ -271,7 +293,7 @@ footer #indicator-volume::-webkit-slider-thumb {
     background: var(--borders);
 }
 
-.player-container #progress::-webkit-slider-thumb {
+#desktop .player-container #progress::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none; 
     height: 0;
@@ -281,6 +303,18 @@ footer #indicator-volume::-webkit-slider-thumb {
     border: none;
     transition: .2s ease-in-out;
 }
+
+#desktop .player-container #progress::-moz-range-thumb {
+    -moz-appearance: none;
+    appearance: none; 
+    height: 0;
+    width: 0;
+    background-color: #f50;
+    border-radius: 50%;
+    border: none;
+    transition: .2s ease-in-out;
+}
+
 
 /*.player-container #progress::-webkit-slider-thumb:hover {
     box-shadow: 0 0 0 10px rgba(255,85,0, .1);

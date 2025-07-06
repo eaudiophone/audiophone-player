@@ -30,5 +30,5 @@ Se utiliza innosetup para crear los instaladores en windows y appimagetool para 
 AppImage para los dispositivos en mac y linux
 
 ### informacion adicional
-[appimagetool](https://www.youtube.com/watch?v=Wy63jwjpNg4)
+[appimagetool](https://www.youtube.com/watch?v=Wy63jwjpNg4)<br />
 [innosetup](https://jrsoftware.org/isinfo.php)
