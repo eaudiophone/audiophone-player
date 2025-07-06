@@ -4,6 +4,7 @@
     "description": "Reproductor personal de música",
     "display": "standalone",
     "start_url": "/audiophone-player/",
+    "prefer_related_applications": false,
     "icons": [
         {
             "src": "icons/android-chrome-512x512.png",
