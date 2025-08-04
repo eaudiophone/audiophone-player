@@ -505,7 +505,6 @@ if (!isMobile) {
 } else {
     // event click para moviles
     UI.progress.addEventListener('touchstart', jumpTo);
-    UI.progress.addEventListener('touchend', jumpTo);
 }  
 
 const STORE = zustandVanilla.createStore(initState);
