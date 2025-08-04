@@ -22,8 +22,8 @@ if (navigator.serviceWorker) navigator.serviceWorker.register('./sw.js');
  * @property {(data: {format: string, filePath: string}) => void} setAudio
  */
 
-const SCREEN = (window.matchMedia('screen and (max-width: 768px)')).matches ? 
-    '#mobile' : '#desktop';
+const isMobile = (window.matchMedia('screen and (max-width: 768px)')).matches; 
+const SCREEN = isMobile ? '#mobile' : '#desktop';
 const UI = {
     uploadButton: document.querySelector(SCREEN + ' ' + 'button#load-playlist'),
     inputFile: document.querySelector(SCREEN + ' ' + '#upload-input'),
@@ -420,7 +420,18 @@ function jumpTo(event) {
     
     // permite obtener el porcentaje de la posicion donde se hace 
     // click al indicador
-    let per = event.clientX / window.innerWidth;
+    let clientX = 0;
+
+    // verificamos si dispositivo movile
+    if (isMobile) {
+        clientX = event.touches[0].clientX;
+    
+    } else {
+        clientX = event.clientX;
+    
+    }
+
+    let per = clientX / window.innerWidth;
 
     // aplicamos el salto y luego la animacion
     if (audio.playing()) audio.seek(audio.duration() * per);
@@ -488,7 +499,13 @@ UI.nextTrack.addEventListener('click', () => skipTo('next'));
 
 if (!UI.progress) return;
 
-UI.progress.addEventListener('click', jumpTo);
+if (!isMobile) {
+    // event click para escritorio
+    UI.progress.addEventListener('click', jumpTo);
+} else {
+    // event click para moviles
+    UI.progress.addEventListener('touchstart', jumpTo);
+}  
 
 const STORE = zustandVanilla.createStore(initState);
 
