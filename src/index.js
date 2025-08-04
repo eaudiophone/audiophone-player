@@ -410,7 +410,7 @@ function skipTo(direction = 'next') {
 
 /**
  * salta a cualquier seccion de la pista
- * @param {MouseEvent} event 
+ * @param {MouseEvent|TouchEvent} event 
  */
 function jumpTo(event) {
     /** @type {State} */
@@ -423,7 +423,7 @@ function jumpTo(event) {
     let clientX = 0;
 
     // verificamos si dispositivo movile
-    if (isMobile) {
+    if (isMobile && event instanceof TouchEvent) {
         clientX = event.touches[0].clientX;
     
     } else {
@@ -505,6 +505,7 @@ if (!isMobile) {
 } else {
     // event click para moviles
     UI.progress.addEventListener('touchstart', jumpTo);
+    UI.progress.addEventListener('touchend', jumpTo);
 }  
 
 const STORE = zustandVanilla.createStore(initState);

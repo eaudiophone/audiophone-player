@@ -1,8 +1,8 @@
 const APP_SHELL = {
-    CACHE_NAME: 'cache-v.0.5',
-    CACHE_STATIC: 'static-v.0.5',
-    CACHE_DYNAMIC: 'dynamic-v.0.5',
-    CACHE_INMUTABLE: 'inmutable-v.0.5',
+    CACHE_NAME: 'cache-v.0.5.1',
+    CACHE_STATIC: 'static-v.0.5.1',
+    CACHE_DYNAMIC: 'dynamic-v.0.5.1',
+    CACHE_INMUTABLE: 'inmutable-v.0.5.1',
 };
 
 /** estructura de la pagina 404 */
