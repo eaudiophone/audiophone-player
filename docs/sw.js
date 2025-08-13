@@ -1,4 +1,4 @@
-(()=>{var s={CACHE_NAME:"cache-v.0.6.1",CACHE_STATIC:"static-v.0.6.1",CACHE_DYNAMIC:"dynamic-v.0.6.1",CACHE_INMUTABLE:"inmutable-v.0.6.1"},r=`
+(()=>{var s={CACHE_NAME:"cache-v.0.6.2",CACHE_STATIC:"static-v.0.6.2",CACHE_DYNAMIC:"dynamic-v.0.6.2",CACHE_INMUTABLE:"inmutable-v.0.6.2"},r=`
 <!DOCTYPE html>
 <html lang="en">
 <head>
