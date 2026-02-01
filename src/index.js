@@ -9,15 +9,17 @@ const createWindow = () => {
 		icon: nativeImage.createFromPath(URILogo),
 		width: 800,
 		height: 600,
+		show: false,
 		webPreferences: {
 			preload: join(__dirname, 'preload.js'),
 			contextIsolation: true,
 		},
 	});
 
+	win.loadFile(join(__dirname, 'rendered', 'index.html'));
 	win.maximize();
 	win.setMenu(null); // establecer en production
-	win.loadFile(join(__dirname, 'rendered', 'index.html'));
+	win.show();
 };
 
 // =========
